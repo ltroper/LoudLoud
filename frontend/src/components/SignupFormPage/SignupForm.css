@@ -1,0 +1,18 @@
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    margin: 10px;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.signup-input {
+    margin: 3px;
+}
+
+.signup-button {
+    width: 60%;
+    margin: 3px;
+
+}
