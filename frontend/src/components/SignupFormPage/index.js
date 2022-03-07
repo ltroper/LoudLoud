@@ -17,6 +17,8 @@ const SignUpFormPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPass, setConfirmPass] = useState("")
+    const [fullName, setFullName] = useState("")
+    const [profilePic, setProfilePic] = useState("")
 
     const [errors, setErrors] = useState([]);
 
@@ -59,6 +61,14 @@ const SignUpFormPage = () => {
             placeholder="Email"
             value={email}
             onChange={e=>setEmail(e.target.value)}
+            required
+            />
+            <input
+            className="signup-input"
+            type="text"
+            placeholder="Full Name"
+            value={fullName}
+            onChange={e=>setFullName(e.target.value)}
             required
             />
             <input

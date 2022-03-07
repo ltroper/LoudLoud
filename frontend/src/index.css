@@ -1,1 +1,10 @@
 /* TODO Add site wide styles */
+.body-main {
+    height: 100%;
+    width: auto;
+    padding: 0%;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    margin-right: 12.5px;
+    margin-left: 12.5px;
+}

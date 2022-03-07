@@ -24,6 +24,16 @@ module.exports = (sequelize, DataTypes) => {
         len: [3, 256]
       }
     },
+    fullName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [3, 256]
+      }
+    },
+    profilePic: {
+      type: DataTypes.TEXT
+    },
     hashedPassword: {
       type: DataTypes.STRING.BINARY,
       allowNull: false,
@@ -86,6 +96,8 @@ module.exports = (sequelize, DataTypes) => {
     const user = await User.create({
       username,
       email,
+      fullName,
+      profilePic,
       hashedPassword
     });
     return await User.scope('currentUser').findByPk(user.id);
