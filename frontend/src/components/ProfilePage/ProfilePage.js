@@ -13,13 +13,16 @@ function ProfilePage({ user }) {
         dispatch(getTracksThunk(user.id))
     },[user, dispatch])
 
+    const userTracks = useSelector(state=>state.tracks)
     const [menu, setMenu] = useState(true)
 
-    const userTracks = useSelector(state=>state.tracks)
 
     const trackArrayObj = Object.values(userTracks)
     const trackArr = Object.values(trackArrayObj)
     console.log(trackArr)
+    trackArr.forEach(obj=>{
+        console.log(obj.name)
+    })
 
 
     return (
@@ -40,9 +43,9 @@ function ProfilePage({ user }) {
                     </ul>
                     <div>
                     {menu && (
-                        <div>{trackArr.forEach(obj=>(
+                        <ul>{trackArr.forEach((obj)=>(
                             <li>{obj.name}</li>
-                        ))}</div>
+                        ))}</ul>
                     )}
                     </div>
                     <div>
