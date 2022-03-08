@@ -3,6 +3,7 @@ import { getTracksThunk } from "../../store/tracks"
 import { useDispatch, useSelector } from "react-redux"
 
 import "./ProfilePage.css"
+import { NavLink } from "react-router-dom"
 
 
 function ProfilePage({ user }) {
@@ -35,15 +36,15 @@ function ProfilePage({ user }) {
                 <div className="mid-profile">
                     <ul className="profile-tabs">
                         <li>
-                            <button className="profile-tab-button" onClick={e=>setMenu(true)}>Tracks</button>
+                            <button className="profile-tab-button" onClick={(e)=>setMenu(true)}>Tracks</button>
                         </li>
                         <li>
-                            <button className="profile-tab-button" onClick={e=>setMenu(false)}>Playlists</button>
+                            <button className="profile-tab-button" onClick={(e)=>setMenu(false)}>Playlists</button>
                         </li>
                     </ul>
                     <div>
                     {menu && (
-                        <ul>{trackArr.forEach((obj)=>(
+                        <ul>{trackArr.map((obj)=>(
                             <li>{obj.name}</li>
                         ))}</ul>
                     )}
@@ -55,7 +56,12 @@ function ProfilePage({ user }) {
                     </div>
                 </div>
                 <div className="lower-profile">
-                    <button className="upload-button">Upload a song</button>
+                    <button className="upload-button">
+                        <NavLink to="/upload" style={{ textDecoration: 'none', color: 'white',
+                        fontFamily: "'Assistant', sans-serif", letterSpacing: "0.5px", fontSize: "15px"}}>
+                            Upload Song
+                        </NavLink>
+                    </button>
                 </div>
             </body>
         </>
