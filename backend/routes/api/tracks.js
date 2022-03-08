@@ -19,4 +19,15 @@ router.get("/:userId", asyncHandler (async (req, res) => {
     return res.json(tracks)
 }))
 
+
+router.post("/upload", asyncHandler (async (req, res) => {
+    const { name, userId, artWork, songFile } = req.body
+    const newSong = await Song.create({
+        name,
+        userId,
+        artWork,
+        songFile
+    })
+    return res.json(newSong)
+}))
 module.exports = router
