@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/ltroper/Authenticate_Me/issues"
   },
-  "homepage": "https://github.com/ltroper/Authenticate_Me#readme"
+  "homepage": "https://github.com/ltroper/Authenticate_Me#readme",
+  "dependencies": {
+    "react-jinke-music-player": "^4.24.2"
+  }
 }

@@ -21,7 +21,7 @@ function SplashPage({isLoaded}){
     } else {
       splash = (
         <>
-            <body className='body'>
+            <body className='splash-body'>
                 <div>
                     <div className='content'>
                         <div className='upper-container'>
