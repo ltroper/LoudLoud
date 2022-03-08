@@ -21,6 +21,7 @@ export const uploadTrackThunk = (track) => async (dispatch) => {
     const {name, userId, artWork, songFile} = track
     const res = await csrfFetch(`/api/tracks/upload`, {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             name,
             userId,
