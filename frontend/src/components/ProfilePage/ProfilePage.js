@@ -23,8 +23,8 @@ function ProfilePage({ user }) {
                             <button className="profile-tab-button" onClick={e=>setMenu(false)}>Playlists</button>
                         </li>
                     </ul>
-                    <div>Tracks(Placeholder)</div>
-                    <div>Playlists(Placeholder)</div>
+                    <div>Tracks(Placeholder{menu})</div>
+                    <div>Playlists(Placeholder{!menu})</div>
                 </div>
                 <div className="lower-profile">
                     <button className="upload-button">Upload a song</button>

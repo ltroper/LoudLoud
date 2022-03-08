@@ -18,7 +18,6 @@ const SignUpFormPage = () => {
     const [password, setPassword] = useState("");
     const [confirmPass, setConfirmPass] = useState("")
     const [fullName, setFullName] = useState("")
-    const [profilePic, setProfilePic] = useState("")
 
     const [errors, setErrors] = useState([]);
 
