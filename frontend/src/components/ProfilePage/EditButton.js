@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
+import { NavLink } from "react-router-dom";
 import * as trackActions from '../../store/tracks'
 import './ProfilePage.css';
 
@@ -26,11 +27,10 @@ function EditButton({ track }) {
         return () => document.removeEventListener("click", closeMenu);
       }, [showMenu]);
 
-      //add delete and edit
 
       const deleteTrack = (e) => {
         e.preventDefault();
-        dispatch(trackActions.deleteTrackThunk(track));
+        dispatch(trackActions.deleteTrackThunk(track.id));
       };
 
       return (
@@ -41,7 +41,11 @@ function EditButton({ track }) {
             {showMenu && (
                 <ul className="edit-buttons-list">
                     <li>
-                        <button className="edit-buttons">Edit name</button>
+                        <button className="edit-buttons">
+                        <NavLink to={`/edit/${track.id}`} style={{ textDecoration: 'none', color: 'white'}}>
+                            Edit track
+                        </NavLink>
+                        </button>
                     </li>
                     <li>
                         <button onClick={deleteTrack} className="edit-buttons">Delete track</button>

@@ -18,21 +18,20 @@ const uploadTrack = (track) => {
     }
 }
 
-const deleteTrack = (track) => {
+const deleteTrack = (trackId) => {
     return {
         type: DELETE_TRACK,
-        track
+        trackId
     }
 }
 
-export const deleteTrackThunk = (track) => async (dispatch) => {
-    const trackId = track.id
+export const deleteTrackThunk = (trackId) => async (dispatch) => {
     const res = await csrfFetch(`/api/tracks/delete/${trackId}`, {
         method: "DELETE"
 
     })
-    dispatch(deleteTrack());
-    return res
+    const data = await res.json()
+    dispatch(deleteTrack(data));
 }
 
 export const uploadTrackThunk = (track) => async (dispatch) => {
@@ -79,8 +78,9 @@ const tracksReducer = (state = initialState, action) => {
             return newState
         }
         case DELETE_TRACK: {
+            console.log(action.trackId)
             newState = {...state}
-            newState[action.track] = null
+            delete newState[action.trackId.id]
             return newState
         }
 

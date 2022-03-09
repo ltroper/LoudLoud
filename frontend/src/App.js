@@ -6,6 +6,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SplashPage from "./components/SplashPage";
 import UploadFormPage from "./components/UploadFormPage/UploadFormPage";
+import EditFormPage from "./components/UploadFormPage/EditFormPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +34,9 @@ function App() {
           </Route>
           <Route path="/upload">
             <UploadFormPage user={sessionUser}/>
+          </Route>
+          <Route path="/edit/:trackId">
+            <EditFormPage user={sessionUser}/>
           </Route>
         </Switch>
       )}
