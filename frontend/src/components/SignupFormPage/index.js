@@ -30,7 +30,7 @@ const SignUpFormPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (password === confirmPass){
-            return dispatch(sessionActions.signUp({credential: username, password}))
+            return dispatch(sessionActions.signUp({ username, email, fullName, password }))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors)

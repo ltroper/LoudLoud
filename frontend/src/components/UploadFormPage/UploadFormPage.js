@@ -3,6 +3,9 @@ import * as trackActions from "../../store/tracks";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom"
 
+import "./Forms.css"
+
+
 const UploadFormPage = ({user}) =>{
 
     const dispatch = useDispatch()
@@ -27,12 +30,11 @@ const UploadFormPage = ({user}) =>{
     }
 
     return (
+    <>
+        <h1 className="form-title">Upload to LoudLoud</h1>
         <form className="upload-form" onSubmit={handleSubmit}>
-            <ul>
-                {errors.map((error) =>
-                <li>{error}</li>
-                )}
-            </ul>
+           
+            <label className="form-label">Name</label>
             <input
             className="upload-input"
             type="text"
@@ -41,6 +43,7 @@ const UploadFormPage = ({user}) =>{
             onChange={e=>setName(e.target.value)}
             required
             />
+            <label className="form-label">ArtWork</label>
             <input
             className="upload-input"
             type="text"
@@ -49,6 +52,7 @@ const UploadFormPage = ({user}) =>{
             onChange={e=>setArt(e.target.value)}
             required
             />
+            <label className="form-label">Song File</label>
             <input
             className="upload-input"
             type="text"
@@ -58,10 +62,11 @@ const UploadFormPage = ({user}) =>{
             required
             />
 
-            <button className="signup-button">
+            <button className="signup-button button">
                 Upload
             </button>
         </form>
+    </>
     )
 }
 

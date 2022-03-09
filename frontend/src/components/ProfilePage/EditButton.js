@@ -42,7 +42,7 @@ function EditButton({ track }) {
                 <ul className="edit-buttons-list">
                     <li>
                         <button className="edit-buttons">
-                        <NavLink to={`/edit/${track.id}`} style={{ textDecoration: 'none', color: 'white'}}>
+                        <NavLink to={{pathname:`/edit/${track.id}`, userProps: {track}}} style={{ textDecoration: 'none', color: 'white'}}>
                             Edit track
                         </NavLink>
                         </button>

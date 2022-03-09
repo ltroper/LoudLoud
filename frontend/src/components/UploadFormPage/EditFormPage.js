@@ -2,19 +2,23 @@ import { useEffect, useState } from "react";
 import * as trackActions from "../../store/tracks";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom"
+import { useLocation} from "react-router-dom"
 
+import "./Forms.css"
 
 const EditFormPage = ({user}) =>{
+    let location = useLocation()
 
+    let track = location.userProps.track
     const dispatch = useDispatch()
 
     let history = useHistory()
 
     const { trackId } = useParams()
 
-    const [name, setName] = useState("")
-    const [art, setArt] = useState("")
-    const [song, setSong] = useState("")
+    const [name, setName] = useState(track.name)
+    const [art, setArt] = useState(track.artWork)
+    const [song, setSong] = useState(track.songFile)
 
     const [errors, setErrors] = useState([]);
 
@@ -30,12 +34,11 @@ const EditFormPage = ({user}) =>{
     }
 
     return (
+       <>
+        <h1 className="form-title">Edit your Track</h1>
         <form className="upload-form" onSubmit={handleSubmit}>
-            <ul>
-                {errors.map((error) =>
-                <li>{error}</li>
-                )}
-            </ul>
+
+            <label className="form-label">Name</label>
             <input
             className="upload-input"
             type="text"
@@ -44,6 +47,7 @@ const EditFormPage = ({user}) =>{
             onChange={e=>setName(e.target.value)}
             required
             />
+            <label className="form-label">ArtWork</label>
             <input
             className="upload-input"
             type="text"
@@ -52,6 +56,7 @@ const EditFormPage = ({user}) =>{
             onChange={e=>setArt(e.target.value)}
             required
             />
+            <label className="form-label">SongFile</label>
             <input
             className="upload-input"
             type="text"
@@ -61,10 +66,11 @@ const EditFormPage = ({user}) =>{
             required
             />
 
-            <button className="signup-button">
+            <button className="signup-button button">
                 Confirm
             </button>
         </form>
+       </>
     )
 }
 

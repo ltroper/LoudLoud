@@ -1,0 +1,25 @@
+.form-title{
+    font-family: 'Assistant', sans-serif;
+}
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    width: 15em;
+    padding-top: 0;
+    padding-left: 2em;
+}
+
+.upload-input{
+    margin: 0.2em;
+}
+
+.form-label {
+    font-family: 'Assistant', sans-serif;
+    padding-left: 0.2em;
+    padding-top: 0.6em;
+}
+
+.button:hover {
+    cursor: pointer;
+}

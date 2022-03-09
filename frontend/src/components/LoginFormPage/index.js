@@ -26,7 +26,7 @@ const LogInFormPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        return dispatch(sessionActions.logIn({credential: username, password}))
+        return dispatch(sessionActions.login({credential: username, password}))
         .catch(async (res) => {
             const data = await res.json();
             if (data && data.errors) setErrors(data.errors)
