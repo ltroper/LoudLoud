@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import * as trackActions from "../../store/tracks";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom"
+import { Redirect, useHistory } from "react-router-dom"
 
 const UploadFormPage = ({user}) =>{
 
     const dispatch = useDispatch()
+
+    let history = useHistory()
 
     const [name, setName] = useState("")
     const [art, setArt] = useState("")
@@ -13,13 +15,15 @@ const UploadFormPage = ({user}) =>{
 
     const [errors, setErrors] = useState([]);
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async (e) =>{
         e.preventDefault()
-        return dispatch(trackActions.uploadTrackThunk({name, userId: user.id, artWork: art, songFile: song}))
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors)
-            })
+        await dispatch(trackActions.uploadTrackThunk({name, userId: user.id, artWork: art, songFile: song}))
+        .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(data.errors)
+        })
+        console.log("AAAAAAAAAAAAAAAA")
+        history.push("/")
     }
 
     return (

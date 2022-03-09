@@ -9,8 +9,6 @@ import ProfilePage from '../ProfilePage/ProfilePage';
 function SplashPage({isLoaded}){
     const sessionUser = useSelector(state => state.session.user);
 
-    console.log(sessionUser)
-
     let splash;
     if (sessionUser) {
       splash = (

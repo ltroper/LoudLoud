@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 import "./ProfilePage.css"
 import { NavLink } from "react-router-dom"
-
+import EditButton from "./EditButton"
 
 function ProfilePage({ user }) {
 
@@ -20,10 +20,6 @@ function ProfilePage({ user }) {
 
     const trackArrayObj = Object.values(userTracks)
     const trackArr = Object.values(trackArrayObj)
-    console.log(trackArr)
-    trackArr.forEach(obj=>{
-        console.log(obj.name)
-    })
 
 
     return (
@@ -45,7 +41,14 @@ function ProfilePage({ user }) {
                     <div>
                     {menu && (
                         <ul>{trackArr.map((obj)=>(
-                            <li>{obj.name}</li>
+                            <div className="track-list">
+                                <li className="track-name">{obj.name}</li>
+                                <audio className="track-controls" controls src={obj.songFile}></audio>
+                                <EditButton track={obj}/>
+                                <button className="like-button">
+                                    <i className={"fa fa-regular fa-heart fa-lg"}></i>
+                                </button>
+                            </div>
                         ))}</ul>
                     )}
                     </div>
