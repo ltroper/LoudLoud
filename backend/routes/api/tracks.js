@@ -32,9 +32,8 @@ router.post("/upload", asyncHandler (async (req, res) => {
 }))
 module.exports = router
 
-router.delete("/delete/:trackId", asyncHandler (async (req, res) =>{
+router.delete("/delete/:trackId", asyncHandler (async (req, res) => {
     const songId = req.params.trackId
-    console.log(songId)
     const song = await Song.findByPk(songId)
     await song.destroy();
     return res.json(song)
