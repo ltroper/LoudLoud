@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import SplashPage from "./components/SplashPage";
 import UploadFormPage from "./components/UploadFormPage/UploadFormPage";
 import EditFormPage from "./components/UploadFormPage/EditFormPage";
+import OtherUsersPage from "./components/OtherUsersPage/OtherUsersPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +29,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <SplashPage isLoaded={isLoaded} />
+          </Route>
+          <Route path="/users/:userId">
+            <OtherUsersPage user={sessionUser}/>
           </Route>
           <Route path="/signup">
             <SignupFormPage />

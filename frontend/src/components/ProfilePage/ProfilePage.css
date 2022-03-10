@@ -5,7 +5,7 @@
     "b b d"
     "c c d";
     grid-template-rows: 270px 1fr 150px;
-    grid-template-columns: 72% 28%;
+    grid-template-columns: 70% 0% 30%;
     font-family: 'Assistant', sans-serif;
 
 
@@ -20,6 +20,67 @@
     margin: 0%;
     font-family: 'Assistant', sans-serif;
     display: flex;
+}
+
+.side-profile {
+    grid-area: d;
+    margin-left: 0.7em;
+    margin-top: 0.7em;
+    margin-bottom: 0.7em;
+    margin-right: 0;
+    border-left: 1px solid rgb(223, 223, 223);
+}
+
+.side-title {
+    margin-top: 0;
+    margin-left: 0.5em;
+    font-size: 24px;
+    color: rgb(100, 100, 100);
+    font-family: 'Assistant', sans-serif;
+}
+
+.other-users-image {
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.other-users-list {
+    list-style: none;
+    margin: 0.5em;
+    padding: 0;
+}
+
+.other-users-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    list-style: none;
+    padding-bottom: 1em;
+    padding-top: 0.3em;
+    border-bottom:1px solid rgb(223, 223, 223);
+}
+
+.other-users-name {
+    font-size: 20px;
+    padding-left: 0.3em;
+}
+
+.other-username {
+    font-size: 12px;
+}
+
+.other-users-button {
+    margin-left: auto;
+    background-color:rgba(0, 0, 0, 0);
+    border-color: #f50;
+    border-style: solid;
+    width: 8em;
+    height: 2em;
+    border-radius: 5px;
 }
 
 .profile-pic {

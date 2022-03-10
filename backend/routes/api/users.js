@@ -12,42 +12,48 @@ const router = express.Router();
 
 
 const validateSignup = [
-    check('email')
-        .exists({ checkFalsy: true })
-        .isEmail()
-        .withMessage('Please provide a valid email.'),
-    check('username')
-        .exists({ checkFalsy: true })
-        .isLength({ min: 4 })
-        .withMessage('Please provide a username with at least 4 characters.'),
-    check('username')
-        .not()
-        .isEmail()
-        .withMessage('Username cannot be an email.'),
-    check('password')
-        .exists({ checkFalsy: true })
-        .isLength({ min: 6 })
-        .withMessage('Password must be 6 characters or more.'),
-    handleValidationErrors
+  check('email')
+    .exists({ checkFalsy: true })
+    .isEmail()
+    .withMessage('Please provide a valid email.'),
+  check('username')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 4 })
+    .withMessage('Please provide a username with at least 4 characters.'),
+  check('username')
+    .not()
+    .isEmail()
+    .withMessage('Username cannot be an email.'),
+  check('password')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 6 })
+    .withMessage('Password must be 6 characters or more.'),
+  handleValidationErrors
 ];
 
 
 
 router.post(
-    '/',
-    validateSignup,
-    asyncHandler(async (req, res) => {
-      const { username, email, fullName, password } = req.body;
-      const user = await User.signup({ username, email, fullName, password });
+  '/',
+  validateSignup,
+  asyncHandler(async (req, res) => {
+    const { username, email, fullName, password } = req.body;
+    const user = await User.signup({ username, email, fullName, password });
 
-      await setTokenCookie(res, user);
+    await setTokenCookie(res, user);
 
-      return res.json({
-        user,
-      });
-    }),
-  );
+    return res.json({
+      user,
+    });
+  }),
+);
 
+router.get("/:userId", asyncHandler(async (req, res) => {
+  const id = req.params.userId;
+  const users = await User.findAll()
+
+  return res.json(users)
+}))
 
 
 module.exports = router;

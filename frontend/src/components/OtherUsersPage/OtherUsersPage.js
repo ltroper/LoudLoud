@@ -2,17 +2,22 @@ import { useState, useEffect } from "react"
 import { getTracksThunk } from "../../store/tracks"
 import { useDispatch, useSelector } from "react-redux"
 import { getUsersThunk } from "../../store/users"
-import "./ProfilePage.css"
-import { NavLink } from "react-router-dom"
-import EditButton from "./EditButton"
+import "../ProfilePage/ProfilePage.css"
+import { NavLink, useParams, useLocation } from "react-router-dom"
 
-function ProfilePage({ user }) {
+
+function OtherUsersPage({ user }) {
+
+    let location = useLocation()
+
+    let otherUser = location.otherUserProps.otherUserx
 
     const dispatch = useDispatch()
 
+
     useEffect(()=> {
-        dispatch(getTracksThunk(user.id))
-    },[user, dispatch])
+        dispatch(getTracksThunk(otherUser.id))
+    },[otherUser, dispatch])
 
     useEffect(()=>{
         dispatch(getUsersThunk(user.id))
@@ -36,8 +41,8 @@ function ProfilePage({ user }) {
         <>
             <body className="profile-body">
                 <div className="upper-profile">
-                    <img src={user.profilePic} className="profile-pic"/>
-                    <h2 className="username">{user.fullName}</h2>
+                    <img src={otherUser.profilePic} className="profile-pic"/>
+                    <h2 className="username">{otherUser.fullName}</h2>
                 </div>
                 <div className="mid-profile">
                     <ul className="profile-tabs">
@@ -54,8 +59,9 @@ function ProfilePage({ user }) {
                             <div className="track-list">
                                 <li className="track-name">{obj.name}</li>
                                 <audio className="track-controls" controls src={obj.songFile}></audio>
-                                <EditButton track={obj}/>
-
+                                <button className="like-button">
+                                    <i className={"fa fa-regular fa-heart fa-lg"}></i>
+                                </button>
                             </div>
                         ))}</ul>
                     )}
@@ -69,14 +75,14 @@ function ProfilePage({ user }) {
                 <div className="side-profile">
                     <h2 className="side-title">Explore</h2>
                     <ul className="other-users-list">{userArr.map((otherUserx)=>(
-                        (otherUserx.username !== user.username) &&(
+                        (otherUserx.username !== user.username) && (otherUserx.username !== otherUser.username) &&(
                             <div className="other-users-item">
                                 <img className="other-users-image" alt="other-user" src={otherUserx.profilePic}></img>
                                 <li className="other-users-name">{otherUserx.fullName}
                                     <li className="other-username">{otherUserx.username}</li>
                                 </li>
                                 <button className="other-users-button">
-                                    <NavLink to={{pathname:`/users/${otherUserx.id}`, otherUserProps: {otherUserx}}}
+                                <NavLink to={{pathname:`/users/${otherUserx.id}`, otherUserProps: {otherUserx}}}
                                     style={{ textDecoration: 'none', color:"#f50",
                                     fontFamily: "'Assistant', sans-serif",
                                     letterSpacing: "0.5px", fontSize: "15px"}}>
@@ -87,16 +93,11 @@ function ProfilePage({ user }) {
                     ))}</ul>
                 </div>
                 <div className="lower-profile">
-                    <button className="upload-button">
-                        <NavLink to="/upload" style={{ textDecoration: 'none', color: 'white',
-                        fontFamily: "'Assistant', sans-serif", letterSpacing: "0.5px", fontSize: "15px"}}>
-                            Upload Song
-                        </NavLink>
-                    </button>
+
                 </div>
             </body>
         </>
     )
 }
 
-export default ProfilePage
+export default OtherUsersPage

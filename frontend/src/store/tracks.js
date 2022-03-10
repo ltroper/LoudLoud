@@ -66,7 +66,7 @@ const tracksReducer = (state = initialState, action) => {
     let newState = {}
     switch (action.type) {
         case GET_TRACKS: {
-            newState = {...state}
+            newState = {}
             action.tracks.forEach(track => {
                 newState[track.id] = track
             });
