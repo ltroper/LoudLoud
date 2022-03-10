@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
-import { addToPlaylistThunk } from '../../store/playlists'
-import './ProfilePage.css';
 
-function AddToPlaylist({ track, playlists }) {
+import { addToPlaylistThunk } from '../../store/playlists'
+import { getPlaylistsThunk } from "../../store/playlists";
+import '../ProfilePage/ProfilePage.css';
+
+function AddToPlaylistFromOther({ track }) {
 
 
     const sessionUser = useSelector(state => state.session.user);
+
+    const [input, setInput] = useState(false)
+    const [newName, setNewName] = useState("")
+
 
     let history = useHistory()
 
@@ -15,8 +21,6 @@ function AddToPlaylist({ track, playlists }) {
 
     const [showMenu, setShowMenu] = useState(false);
     const [errors, setErrors] = useState([])
-    const [input, setInput] = useState(false)
-    const [newName, setNewName] = useState("")
 
     const openMenu = () => {
         if (showMenu) return;
@@ -52,7 +56,20 @@ function AddToPlaylist({ track, playlists }) {
         return () => document.removeEventListener("click", closeInput);
     }, [input]);
 
+    useEffect(() => {
+        dispatch(getPlaylistsThunk(sessionUser.id))
+    }, [sessionUser, dispatch])
 
+    const userPlaylists = useSelector(state => state.playlists)
+    const playArrObj = Object.values(userPlaylists)
+    const playlistArr = Object.values(playArrObj)
+    const playlistNames = new Set()
+
+    playlistArr.forEach(playlist => {
+        playlistNames.add(playlist.name)
+    })
+
+    let playlistNamesArray = [...playlistNames];
 
 
     return (
@@ -62,7 +79,7 @@ function AddToPlaylist({ track, playlists }) {
             </button>
             {showMenu && (
                 <ul className="edit-buttons-list">
-                    {playlists.map((nameOfP) => (
+                    {playlistNamesArray.map((nameOfP) => (
                         <li>
                             <button className="edit-buttons2" onClick={async e => {
                                 e.preventDefault()
@@ -78,7 +95,7 @@ function AddToPlaylist({ track, playlists }) {
                         </li>
                     ))}
                     <li>
-                        <button onClick={e=>setInput(!input)} className="edit-buttons">
+                    <button onClick={e=>setInput(!input)} className="edit-buttons">
                             New Playlist
                         </button>
 
@@ -87,7 +104,7 @@ function AddToPlaylist({ track, playlists }) {
                 </ul>
             )}
             {input && (
-                            <div onClose={() => setInput(false)}>
+                            <>
                                 <input
                                 className="new-playlist-input"
                                 type="text"
@@ -97,7 +114,6 @@ function AddToPlaylist({ track, playlists }) {
                                 />
                                 <button onClick={async e => {
                                 e.preventDefault()
-                                setInput(false)
                                 await dispatch(addToPlaylistThunk({ name: newName, userId: sessionUser.id, songId: track.id }))
                                     .catch(async (res) => {
                                         const data = await res.json();
@@ -105,11 +121,11 @@ function AddToPlaylist({ track, playlists }) {
                                     })
                                 history.push("/")
                             }}>Submit</button>
-                            </div>
+                            </>
                         )}
         </>
     );
 }
 
 
-export default AddToPlaylist
+export default AddToPlaylistFromOther

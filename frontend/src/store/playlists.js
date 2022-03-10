@@ -48,7 +48,7 @@ const playlistReducer = (state = initialState, action) => {
     let newState = {}
     switch (action.type) {
         case GET_PLAYLISTS: {
-            newState = { ...state }
+            newState = {}
             const arr = action.playlists
             for (let i = 0; i < arr.length; i++) {
                 newState[i] = arr[i]
@@ -59,7 +59,7 @@ const playlistReducer = (state = initialState, action) => {
         case ADD_PLAYLISTS: {
             newState = {...state}
             console.log(action)
-            newState[action.playlist.name] = action.playlist
+            newState[action.playlists.name] = action.playlists
             return newState
 
         }

@@ -34,9 +34,17 @@ function ProfilePage({ user }) {
     }, [user, dispatch])
 
 
-    const userTracks = useSelector(state => state.tracks)
-    const trackArrayObj = Object.values(userTracks)
+    const allTracks = useSelector(state => state.tracks)
+    const trackArrayObj = Object.values(allTracks)
     const trackArr = Object.values(trackArrayObj)
+
+    const userTrackArr = []
+    for (let i = 0; i < trackArr.length; i++){
+        let track = trackArr[i]
+        if (track.userId === user.id){
+            userTrackArr.push(track)
+        }
+    }
 
     const otherUsers = useSelector(state => state.users)
     const userArrayObj = Object.values(otherUsers)
@@ -95,7 +103,7 @@ function ProfilePage({ user }) {
                     </ul>
                     <div>
                         {menu && (
-                            <ul>{trackArr.map((obj) => (
+                            <ul>{userTrackArr.map((obj) => (
                                 <div className="track-list">
                                     <li className="track-name">{obj.name}</li>
                                     <audio className="track-controls" controls src={obj.songFile}></audio>
