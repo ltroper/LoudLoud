@@ -27,7 +27,7 @@ function ProfilePage({ user }) {
 
     useEffect(() => {
         dispatch(getPlaylistsThunk(user.id))
-    }, [user, dispatch])
+    }, [dispatch])
 
     useEffect(() => {
         dispatch(getAllTracksThunk())

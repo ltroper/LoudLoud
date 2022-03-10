@@ -47,8 +47,6 @@ function AddToPlaylist({ track, playlists }) {
             setInput(false);
         };
 
-        document.addEventListener('click', closeInput);
-
         return () => document.removeEventListener("click", closeInput);
     }, [input]);
 
@@ -78,7 +76,7 @@ function AddToPlaylist({ track, playlists }) {
                         </li>
                     ))}
                     <li>
-                        <button onClick={e=>setInput(!input)} className="edit-buttons">
+                        <button onClick={e => setInput(!input)} className="edit-buttons">
                             New Playlist
                         </button>
 
@@ -87,26 +85,27 @@ function AddToPlaylist({ track, playlists }) {
                 </ul>
             )}
             {input && (
-                            <div onClose={() => setInput(false)}>
-                                <input
-                                className="new-playlist-input"
-                                type="text"
-                                value={newName}
-                                onChange={e=>setNewName(e.target.value)}
-                                required
-                                />
-                                <button onClick={async e => {
-                                e.preventDefault()
-                                setInput(false)
-                                await dispatch(addToPlaylistThunk({ name: newName, userId: sessionUser.id, songId: track.id }))
-                                    .catch(async (res) => {
-                                        const data = await res.json();
-                                        if (data && data.errors) setErrors(data.errors)
-                                    })
-                                history.push("/")
-                            }}>Submit</button>
-                            </div>
-                        )}
+                <div>
+                    <input
+                        onBlur={e => setInput(!input)}
+                        className="new-playlist-input"
+                        type="text"
+                        value={newName}
+                        onChange={e => setNewName(e.target.value)}
+                        required
+                    />
+                    <button onClick={async e => {
+                        e.preventDefault()
+                        setInput(false)
+                        await dispatch(addToPlaylistThunk({ name: newName, userId: sessionUser.id, songId: track.id }))
+                            .catch(async (res) => {
+                                const data = await res.json();
+                                if (data && data.errors) setErrors(data.errors)
+                            })
+                        history.push("/")
+                    }}>Submit</button>
+                </div>
+            )}
         </>
     );
 }

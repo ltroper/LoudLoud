@@ -29,7 +29,7 @@ function OtherUsersPage({ user }) {
 
     useEffect(() => {
         dispatch(getPlaylistsThunk(otherUser.id))
-    }, [user, dispatch])
+    },[otherUser, dispatch])
 
     useEffect(() => {
         dispatch(getAllTracksThunk())
@@ -54,6 +54,7 @@ function OtherUsersPage({ user }) {
     const userArr = Object.values(userArrayObj)
 
     const userPlaylists = useSelector(state => state.playlists)
+    console.log(userPlaylists)
     const playArrObj = Object.values(userPlaylists)
     const playlistArr = Object.values(playArrObj)
     const playlistNames = new Set()
