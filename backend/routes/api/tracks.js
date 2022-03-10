@@ -15,8 +15,13 @@ router.get("/:userId", asyncHandler (async (req, res) => {
     const tracks = await Song.findAll({
         where: {userId}
     })
-
     return res.json(tracks)
+}))
+
+router.get("/all", asyncHandler (async (req, res) => {
+
+    const songs = await Song.findAll()
+    return res.json(songs)
 }))
 
 
