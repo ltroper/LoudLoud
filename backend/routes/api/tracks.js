@@ -10,6 +10,12 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
+router.get("/all", asyncHandler (async (req, res) => {
+
+    const songs = await Song.findAll()
+    return res.json(songs)
+}))
+
 router.get("/:userId", asyncHandler (async (req, res) => {
     const userId = req.params.userId;
     const tracks = await Song.findAll({
@@ -18,11 +24,6 @@ router.get("/:userId", asyncHandler (async (req, res) => {
     return res.json(tracks)
 }))
 
-router.get("/all", asyncHandler (async (req, res) => {
-
-    const songs = await Song.findAll()
-    return res.json(songs)
-}))
 
 
 router.post("/upload", asyncHandler (async (req, res) => {
@@ -35,7 +36,6 @@ router.post("/upload", asyncHandler (async (req, res) => {
     })
     return res.json(newSong)
 }))
-module.exports = router
 
 router.delete("/delete/:trackId", asyncHandler (async (req, res) => {
     const songId = req.params.trackId
@@ -43,3 +43,5 @@ router.delete("/delete/:trackId", asyncHandler (async (req, res) => {
     await song.destroy();
     return res.json(song)
 }))
+
+module.exports = router

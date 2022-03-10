@@ -16,6 +16,18 @@ router.get("/:userId", asyncHandler (async (req, res) => {
     return res.json(playlists)
 }))
 
+router.post("/upload", asyncHandler (async (req, res) => {
+    const { name, userId, songId } = req.body;
+    const newPlaylist = await Playlist.create({
+        name,
+        userId,
+        songId
+    })
+
+    return res.json(newPlaylist)
+
+}))
+
 
 
 
