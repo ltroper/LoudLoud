@@ -3,7 +3,7 @@ import { csrfFetch } from "./csrf"
 const GET_TRACKS = "tracks/profile"
 const UPLOAD_TRACK = "tracks/upload"
 const DELETE_TRACK = "tracks/delete"
-const GET_ALLTRACKS = "tracks/all"
+const GET_ALLTRACKS = "songs/all"
 
 const getTracks = (tracks) => {
     return {
@@ -88,8 +88,7 @@ const tracksReducer = (state = initialState, action) => {
             return newState;
         }
         case GET_ALLTRACKS: {
-            newState = {}
-            console.log(action.songs)
+            newState = {...state}
             action.songs.forEach(song => {
                 newState[song.id] = song
             });

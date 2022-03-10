@@ -25,7 +25,6 @@ const UploadFormPage = ({user}) =>{
             const data = await res.json();
             if (data && data.errors) setErrors(data.errors)
         })
-        console.log("AAAAAAAAAAAAAAAA")
         history.push("/")
     }
 
@@ -33,7 +32,7 @@ const UploadFormPage = ({user}) =>{
     <>
         <h1 className="form-title">Upload to LoudLoud</h1>
         <form className="upload-form" onSubmit={handleSubmit}>
-           
+
             <label className="form-label">Name</label>
             <input
             className="upload-input"

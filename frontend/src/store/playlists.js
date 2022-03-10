@@ -1,10 +1,18 @@
 import { csrfFetch } from "./csrf"
 
 const GET_PLAYLISTS = "playlists/profile"
+const ADD_PLAYLISTS = "playlists/add"
 
 const getPlaylists = (playlists) => {
     return {
         type: GET_PLAYLISTS,
+        playlists
+    }
+}
+
+const addPlaylists = (playlists) => {
+    return {
+        type: ADD_PLAYLISTS,
         playlists
     }
 }
@@ -17,6 +25,22 @@ export const getPlaylistsThunk = (userId) => async (dispatch) => {
     dispatch(getPlaylists(data))
 }
 
+export const addToPlaylistThunk = (playlist) => async (dispatch) => {
+    const { name, userId, songId } = playlist;
+    const res = await csrfFetch(`/api/playlists/upload`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            name,
+            userId,
+            songId
+        }),
+    });
+
+    const data = await res.json()
+    dispatch(addPlaylists(data))
+}
+
 
 const initialState = {}
 
@@ -24,15 +48,20 @@ const playlistReducer = (state = initialState, action) => {
     let newState = {}
     switch (action.type) {
         case GET_PLAYLISTS: {
-            newState = {...state}
+            newState = { ...state }
             const arr = action.playlists
-            for (let i = 0; i < arr.length; i++){
+            for (let i = 0; i < arr.length; i++) {
                 newState[i] = arr[i]
             }
-            // arr.forEach(playlist => {
-            //     newState[playlist.id] = playlist
-            // });
+
             return newState
+        }
+        case ADD_PLAYLISTS: {
+            newState = {...state}
+            console.log(action)
+            newState[action.playlist.name] = action.playlist
+            return newState
+
         }
         default: return state;
     }

@@ -134,6 +134,7 @@
     list-style: none;
     margin: 0.5em;
     padding: 1em;
+    padding-right: 0;
     border-bottom:1px solid rgb(223, 223, 223);
 }
 
@@ -199,6 +200,20 @@
     margin-left: 1em;
 }
 
+.edit-button2 {
+    border: none;
+    background-color:rgba(0, 0, 0, 0);
+    margin-left: 0.7em;
+    margin-right: 0.5em;
+    margin-bottom: 0.15em;
+    color: rgb(223, 223, 223);
+    height: 50px;
+}
+
+.edit-button2:hover {
+    color:rgb(83, 83, 83);
+}
+
 .edit-buttons-list {
     display: flex;
     flex-direction: column;
@@ -219,7 +234,22 @@
     text-decoration: none;
 }
 
+.edit-buttons2 {
+    width: 7em;
+    height: 1.7em;
+    background-color: rgb(223, 223, 223);
+    border-color: rgb(223, 223, 223);
+    border-style: solid;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
 .edit-buttons:hover {
+    cursor: pointer;
+}
+
+.edit-buttons2:hover {
     cursor: pointer;
 }
 

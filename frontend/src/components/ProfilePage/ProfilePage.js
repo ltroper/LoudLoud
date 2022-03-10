@@ -11,6 +11,7 @@ import { getAllTracksThunk } from "../../store/tracks"
 import "./ProfilePage.css"
 
 import EditButton from "./EditButton"
+import AddToPlaylist from "./AddToPlaylist"
 
 function ProfilePage({ user }) {
 
@@ -99,7 +100,7 @@ function ProfilePage({ user }) {
                                     <li className="track-name">{obj.name}</li>
                                     <audio className="track-controls" controls src={obj.songFile}></audio>
                                     <EditButton track={obj} />
-
+                                    <AddToPlaylist track={obj} playlists={playlistNamesArray}/>
                                 </div>
                             ))}</ul>
                         )}
