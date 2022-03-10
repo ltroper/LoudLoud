@@ -3,11 +3,19 @@ import { csrfFetch } from "./csrf"
 const GET_TRACKS = "tracks/profile"
 const UPLOAD_TRACK = "tracks/upload"
 const DELETE_TRACK = "tracks/delete"
+const GET_ALLTRACKS = "tracks/all"
 
 const getTracks = (tracks) => {
     return {
         type: GET_TRACKS,
         tracks
+    }
+}
+
+const getAllTracks = (songs) => {
+    return {
+        type: GET_ALLTRACKS,
+        songs
     }
 }
 
@@ -51,6 +59,13 @@ export const uploadTrackThunk = (track) => async (dispatch) => {
         dispatch(uploadTrack(data))
 }
 
+export const getAllTracksThunk = () => async (dispatch) => {
+
+    const res = await csrfFetch(`/api/tracks/all`);
+    const data = await res.json()
+    dispatch(getAllTracks(data))
+}
+
 export const getTracksThunk = (userId) => async (dispatch) => {
 
     const res = await csrfFetch(`/api/tracks/${userId}`);
@@ -71,7 +86,15 @@ const tracksReducer = (state = initialState, action) => {
                 newState[track.id] = track
             });
             return newState;
-            }
+        }
+        case GET_ALLTRACKS: {
+            newState = {}
+            console.log(action.songs)
+            action.songs.forEach(song => {
+                newState[song.id] = song
+            });
+            return newState;
+        }
         case UPLOAD_TRACK: {
             newState = {...state}
             newState[action.track.id] = action.track

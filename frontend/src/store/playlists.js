@@ -25,9 +25,13 @@ const playlistReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_PLAYLISTS: {
             newState = {...state}
-            action.playlists.forEach(playlist => {
-                newState[playlist.id] = playlist
-            });
+            const arr = action.playlists
+            for (let i = 0; i < arr.length; i++){
+                newState[i] = arr[i]
+            }
+            // arr.forEach(playlist => {
+            //     newState[playlist.id] = playlist
+            // });
             return newState
         }
         default: return state;
