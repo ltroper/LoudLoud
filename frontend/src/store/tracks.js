@@ -81,7 +81,7 @@ const tracksReducer = (state = initialState, action) => {
     let newState = {}
     switch (action.type) {
         case GET_TRACKS: {
-            newState = {}
+            newState = {...state}
             action.tracks.forEach(track => {
                 newState[track.id] = track
             });
@@ -100,7 +100,6 @@ const tracksReducer = (state = initialState, action) => {
             return newState
         }
         case DELETE_TRACK: {
-            console.log(action.trackId)
             newState = {...state}
             delete newState[action.trackId.id]
             return newState

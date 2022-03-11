@@ -12,6 +12,7 @@ import "./ProfilePage.css"
 
 import EditButton from "./EditButton"
 import AddToPlaylist from "./AddToPlaylist"
+import DeleteButton from "./DeleteButton"
 
 function ProfilePage({ user }) {
 
@@ -76,9 +77,17 @@ function ProfilePage({ user }) {
 
 
 
+    let newObject = {}
+    const manyArraysOfPlay2 = Object.entries(objOfPlaylists)
+    const manyArraysOfPlaySet = manyArraysOfPlay2.map(([key, value]) => (
 
-    const manyArraysOfPlay = Object.entries(objOfPlaylists)
 
+        newObject[key] = Array.from(new Set(value))
+
+    ))
+
+
+    const manyArraysOfPlay = Object.entries(newObject)
 
     const [menu, setMenu] = useState(true)
 
@@ -130,7 +139,12 @@ function ProfilePage({ user }) {
                                             </>
                                         ))
                                     ))
-                                }</div>
+                                }
+                                    <div className="delete-button">
+                                        <DeleteButton play={key}/>
+                                    </div>
+                                </div>
+
                             ))}</ul>
                         )}
                     </div>

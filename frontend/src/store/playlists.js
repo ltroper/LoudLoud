@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf"
 
 const GET_PLAYLISTS = "playlists/profile"
 const ADD_PLAYLISTS = "playlists/add"
+const DELETE_PLAYLIST = "playlists/delete"
 
 const getPlaylists = (playlists) => {
     return {
@@ -15,6 +16,22 @@ const addPlaylists = (playlists) => {
         type: ADD_PLAYLISTS,
         playlists
     }
+}
+
+const deletePlaylist = (playlistName) => {
+    return {
+        type: DELETE_PLAYLIST,
+        playlistName
+    }
+}
+
+export const deletePlaylistThunk = (playlistName) => async (dispatch) => {
+    const res = await csrfFetch(`/api/playlists/delete/${playlistName}`, {
+        method: "DELETE"
+
+    })
+    const data = await res.json()
+    dispatch(deletePlaylist(data));
 }
 
 export const getPlaylistsThunk = (userId) => async (dispatch) => {
@@ -47,22 +64,34 @@ const initialState = {}
 
 const playlistReducer = (state = initialState, action) => {
     let newState = {}
+    let solutionToMyProblems
     switch (action.type) {
         case GET_PLAYLISTS: {
-            newState = {}
+            newState = {...state}
             const arr = action.playlists
-            for (let i = 0; i < arr.length; i++) {
-                newState[i] = arr[i]
-            }
-
+            newState = arr
+            // for (let i = 0; i < arr.length; i++) {
+            //     newState[i] = arr[i]
+            // }
             return newState
         }
         case ADD_PLAYLISTS: {
             newState = {...state}
-            console.log(action)
-            newState[action.playlists.name] = action.playlists
+            solutionToMyProblems = Object.keys(newState)
+            newState[solutionToMyProblems.length] = action.playlists
             return newState
-
+        }
+        case DELETE_PLAYLIST: {
+            newState = {...state}
+            const arr = Object.keys(newState)
+            console.log(arr)
+            console.log(newState)
+            for (let i = 0; i < arr.length; i++){
+                if (newState[i].name === arr[0].name){
+                    delete newState[i]
+                }
+            }
+            return newState
         }
         default: return state;
     }

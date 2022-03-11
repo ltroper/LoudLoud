@@ -66,8 +66,7 @@ function AddToPlaylist({ track, playlists }) {
                                 e.preventDefault()
                                 await dispatch(addToPlaylistThunk({ name: nameOfP, userId: sessionUser.id, songId: track.id }))
                                     .catch(async (res) => {
-                                        const data = await res.json();
-                                        if (data && data.errors) setErrors(data.errors)
+                                        return
                                     })
                                 history.push("/")
                             }}>
@@ -87,14 +86,14 @@ function AddToPlaylist({ track, playlists }) {
             {input && (
                 <div>
                     <input
-                        onBlur={e => setInput(!input)}
                         className="new-playlist-input"
                         type="text"
                         value={newName}
                         onChange={e => setNewName(e.target.value)}
                         required
                     />
-                    <button onClick={async e => {
+                    <button
+                    onClick={async e => {
                         e.preventDefault()
                         await dispatch(addToPlaylistThunk({ name: newName, userId: sessionUser.id, songId: track.id }))
                         .catch(async (res) => {
@@ -102,7 +101,10 @@ function AddToPlaylist({ track, playlists }) {
                             if (data && data.errors) setErrors(data.errors)
                         })
                         history.push("/")
-                    }}>Submit</button>
+                        setInput(false)
+                    }}
+                    onBlur={e => setInput(!input)}
+                    >Submit</button>
                 </div>
             )}
         </>

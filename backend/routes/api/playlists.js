@@ -28,6 +28,22 @@ router.post("/upload", asyncHandler (async (req, res) => {
 
 }))
 
+router.delete("/delete/:name", asyncHandler (async (req, res) => {
+    const name = req.params.name
+    const song = await Playlist.findAll({
+        where:{
+            name
+        }
+    })
+
+
+    song.forEach(element => {
+        console.log(element)
+        element.destroy()
+    });
+
+    return res.json(song)
+}))
 
 
 

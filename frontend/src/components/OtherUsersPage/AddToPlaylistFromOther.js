@@ -100,24 +100,26 @@ function AddToPlaylistFromOther({ track, playlists }) {
             )}
             {input && (
                 <div>
-                    <input
-                        onBlur={e => setInput(!input)}
-                        className="new-playlist-input"
-                        type="text"
-                        value={newName}
-                        onChange={e => setNewName(e.target.value)}
-                        required
-                    />
-                    <button onClick={async e => {
-                        e.preventDefault()
-                        await dispatch(addToPlaylistThunk({ name: newName, userId: sessionUser.id, songId: track.id }))
-                            .catch(async (res) => {
-                                const data = await res.json();
-                                if (data && data.errors) setErrors(data.errors)
-                            })
-                        history.push("/")
-                    }}>Submit</button>
-                </div>
+                <input
+                    className="new-playlist-input"
+                    type="text"
+                    value={newName}
+                    onChange={e => setNewName(e.target.value)}
+                    required
+                />
+                <button
+                onClick={async e => {
+                    e.preventDefault()
+                    await dispatch(addToPlaylistThunk({ name: newName, userId: sessionUser.id, songId: track.id }))
+                    .catch(async (res) => {
+                        return
+                    })
+                    history.push("/")
+                    setInput(false)
+                }}
+                onBlur={e => setInput(!input)}
+                >Submit</button>
+            </div>
             )}
         </>
     );

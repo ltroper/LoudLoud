@@ -8,3 +8,7 @@
     margin-right: 12.5px;
     margin-left: 12.5px;
 }
+
+.nav-bar {
+    z-index: 1;
+}
