@@ -23,6 +23,7 @@ export const getPlaylistsThunk = (userId) => async (dispatch) => {
 
     const data = await res.json()
     dispatch(getPlaylists(data))
+
 }
 
 export const addToPlaylistThunk = (playlist) => async (dispatch) => {
@@ -50,7 +51,6 @@ const playlistReducer = (state = initialState, action) => {
         case GET_PLAYLISTS: {
             newState = {}
             const arr = action.playlists
-            console.log(arr)
             for (let i = 0; i < arr.length; i++) {
                 newState[i] = arr[i]
             }

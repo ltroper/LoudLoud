@@ -96,12 +96,11 @@ function AddToPlaylist({ track, playlists }) {
                     />
                     <button onClick={async e => {
                         e.preventDefault()
-                        setInput(false)
                         await dispatch(addToPlaylistThunk({ name: newName, userId: sessionUser.id, songId: track.id }))
-                            .catch(async (res) => {
-                                const data = await res.json();
-                                if (data && data.errors) setErrors(data.errors)
-                            })
+                        .catch(async (res) => {
+                            const data = await res.json();
+                            if (data && data.errors) setErrors(data.errors)
+                        })
                         history.push("/")
                     }}>Submit</button>
                 </div>

@@ -6,7 +6,7 @@ import { addToPlaylistThunk } from '../../store/playlists'
 import { getPlaylistsThunk } from "../../store/playlists";
 import '../ProfilePage/ProfilePage.css';
 
-function AddToPlaylistFromOther({ track }) {
+function AddToPlaylistFromOther({ track, playlists }) {
 
 
     const sessionUser = useSelector(state => state.session.user);
@@ -54,9 +54,6 @@ function AddToPlaylistFromOther({ track }) {
         return () => document.removeEventListener("click", closeInput);
     }, [input]);
 
-    useEffect(() => {
-        dispatch(getPlaylistsThunk(sessionUser.id))
-    }, [sessionUser, dispatch])
 
     const userPlaylists = useSelector(state => state.playlists)
     const playArrObj = Object.values(userPlaylists)
@@ -77,7 +74,7 @@ function AddToPlaylistFromOther({ track }) {
             </button>
             {showMenu && (
                 <ul className="edit-buttons-list">
-                    {playlistNamesArray.map((nameOfP) => (
+                    {playlists.map((nameOfP) => (
                         <li>
                             <button className="edit-buttons2" onClick={async e => {
                                 e.preventDefault()

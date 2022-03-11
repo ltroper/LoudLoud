@@ -145,7 +145,7 @@ function ProfilePage({ user }) {
                                     <li className="other-username">{otherUserx.username}</li>
                                 </li>
                                 <button className="other-users-button">
-                                    <NavLink to={{ pathname: `/users/${otherUserx.id}`, otherUserProps: { otherUserx } }}
+                                    <NavLink to={{ pathname: `/users/${otherUserx.id}`, otherUserProps: { otherUserx }, userPlaylistx: {playlistNamesArray} }}
                                         style={{
                                             textDecoration: 'none', color: "#f50",
                                             fontFamily: "'Assistant', sans-serif",

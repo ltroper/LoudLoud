@@ -15,6 +15,7 @@ function OtherUsersPage({ user }) {
     let location = useLocation()
 
     let otherUser = location.otherUserProps.otherUserx
+    let playlistNamesArray = location.userPlaylistx.playlistNamesArray
 
     const dispatch = useDispatch()
 
@@ -54,7 +55,6 @@ function OtherUsersPage({ user }) {
     const userArr = Object.values(userArrayObj)
 
     const userPlaylists = useSelector(state => state.playlists)
-    console.log(userPlaylists)
     const playArrObj = Object.values(userPlaylists)
     const playlistArr = Object.values(playArrObj)
     const playlistNames = new Set()
@@ -63,7 +63,7 @@ function OtherUsersPage({ user }) {
         playlistNames.add(playlist.name)
     })
 
-    let playlistNamesArray = [...playlistNames];
+    let otherPlaylistNamesArray = [...playlistNames];
 
 
     let objOfPlaylists = {}
@@ -111,7 +111,7 @@ function OtherUsersPage({ user }) {
                                 <button className="like-button">
                                     <i className={"fa fa-regular fa-heart fa-lg"}></i>
                                 </button>
-                                <AddToPlaylistFromOther track={obj}/>
+                                <AddToPlaylistFromOther track={obj} playlists={playlistNamesArray}/>
                             </div>
                         ))}</ul>
                     )}
@@ -149,7 +149,7 @@ function OtherUsersPage({ user }) {
                                     <li className="other-username">{otherUserx.username}</li>
                                 </li>
                                 <button className="other-users-button">
-                                <NavLink to={{pathname:`/users/${otherUserx.id}`, otherUserProps: {otherUserx}}}
+                                <NavLink to={{pathname:`/users/${otherUserx.id}`, otherUserProps: {otherUserx}, userPlaylistx: {playlistNamesArray}}}
                                     style={{ textDecoration: 'none', color:"#f50",
                                     fontFamily: "'Assistant', sans-serif",
                                     letterSpacing: "0.5px", fontSize: "15px"}}>
