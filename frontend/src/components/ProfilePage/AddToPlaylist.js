@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
-import { addToPlaylistThunk } from '../../store/playlists'
+import { addPlaylistThunk, addSongToPlaylistThunk } from '../../store/playlists'
 import './ProfilePage.css';
 
 function AddToPlaylist({ track, playlists }) {
@@ -60,17 +60,17 @@ function AddToPlaylist({ track, playlists }) {
             </button>
             {showMenu && (
                 <ul className="edit-buttons-list">
-                    {playlists.map((nameOfP) => (
+                    {playlists.map((playlist) => (
                         <li>
                             <button className="edit-buttons2" onClick={async e => {
                                 e.preventDefault()
-                                await dispatch(addToPlaylistThunk({ name: nameOfP, userId: sessionUser.id, songId: track.id }))
+                                await dispatch(addSongToPlaylistThunk({ playlistId: playlist.id, songId: track.id }))
                                     .catch(async (res) => {
                                         return
                                     })
                                 history.push("/")
                             }}>
-                                {nameOfP}
+                                {playlist.name}
                             </button>
                         </li>
                     ))}
@@ -95,7 +95,8 @@ function AddToPlaylist({ track, playlists }) {
                     <button
                     onClick={async e => {
                         e.preventDefault()
-                        await dispatch(addToPlaylistThunk({ name: newName, userId: sessionUser.id, songId: track.id }))
+                        await dispatch(addPlaylistThunk({ name: newName, userId: sessionUser.id, songId: track.id }))
+                        await dispatch(addSongToPlaylistThunk({}))
                         .catch(async (res) => {
                             const data = await res.json();
                             if (data && data.errors) setErrors(data.errors)

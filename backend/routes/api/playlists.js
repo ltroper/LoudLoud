@@ -1,5 +1,6 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
+const db = require('../../db/models');
 
 const { User, Song, Playlist, Playlist_Song } = require('../../db/models');
 
@@ -17,23 +18,27 @@ router.get("/:userId", asyncHandler (async (req, res) => {
 }))
 
 router.post("/upload", asyncHandler (async (req, res) => {
-    const { name, userId, songId } = req.body;
+    const { name, userId } = req.body;
     const newPlaylist = await Playlist.create({
         name,
-        userId,
-        songId
+        userId
+
     })
 
     return res.json(newPlaylist)
 
 }))
 
-router.post("/addSong", asyncHandler (async (req, res) => {
-    const { playlistId, songId } = req.body
+router.post("/:playlistId/:songId", asyncHandler (async (req, res) => {
+    const { playlistId, songId } = req.params
 
-    console.log("this is the req.body", req.body);
 
-    const addPlaylist = await Playlist.findOne({
+    const newSongInPlaylist = await Playlist_Song.create({
+        playlistId, songId
+    })
+
+
+    const playlist = await Playlist.findOne({
         where: {
             id: playlistId
         },
@@ -42,12 +47,7 @@ router.post("/addSong", asyncHandler (async (req, res) => {
             as: "songs"
         }
     })
-
-    // const addSong = await Song.findByPk(songId)
-
-    // addPlaylist.songs.push()
-    console.log("PLAYLIST:  ", addPlaylist)
-    return res.json({test: "test"})
+    return res.json(playlist)
 
 }))
 

@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf"
 const GET_PLAYLISTS = "playlists/profile"
 const ADD_PLAYLISTS = "playlists/add"
 const DELETE_PLAYLIST = "playlists/delete"
+const ADD_SONG_TOPLAY = "playlist/addSong"
 
 const getPlaylists = (playlists) => {
     return {
@@ -15,6 +16,13 @@ const addPlaylists = (playlists) => {
     return {
         type: ADD_PLAYLISTS,
         playlists
+    }
+}
+
+const addSongToPlaylist = (playlist) => {
+    return {
+        type: ADD_SONG_TOPLAY,
+        playlist
     }
 }
 
@@ -43,15 +51,26 @@ export const getPlaylistsThunk = (userId) => async (dispatch) => {
 
 }
 
-export const addToPlaylistThunk = (playlist) => async (dispatch) => {
-    const { name, userId, songId } = playlist;
+export const addSongToPlaylistThunk = (playlistId, songId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/playlists/upload`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+    })
+
+    if (res.ok) {
+        const playlist = await res.json()
+        dispatch(addSongToPlaylist(playlist))
+    }
+}
+
+export const addPlaylistThunk = (playlist) => async (dispatch) => {
+    const { name, userId } = playlist;
     const res = await csrfFetch(`/api/playlists/upload`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             name,
             userId,
-            songId
         }),
     });
 
@@ -63,26 +82,29 @@ export const addToPlaylistThunk = (playlist) => async (dispatch) => {
 const initialState = {}
 
 const playlistReducer = (state = initialState, action) => {
-    let newState = {}
+
     let solutionToMyProblems
     switch (action.type) {
         case GET_PLAYLISTS: {
-            newState = {...state}
-            const arr = action.playlists
-            newState = arr
-            // for (let i = 0; i < arr.length; i++) {
-            //     newState[i] = arr[i]
-            // }
+            const newState = JSON.parse(JSON.stringify(state))
+            // console.log("STATE", newState)
+            // console.log("ACTION", action)
+            action.playlists.forEach(playlist => {
+                newState[playlist.id] = playlist
+            });
             return newState
         }
+        case ADD_SONG_TOPLAY: {
+            const newState = JSON.parse(JSON.stringify(state))
+        }
         case ADD_PLAYLISTS: {
-            newState = {...state}
+            const newState = JSON.parse(JSON.stringify(state))
             solutionToMyProblems = Object.keys(newState)
             newState[solutionToMyProblems.length] = action.playlists
             return newState
         }
         case DELETE_PLAYLIST: {
-            newState = {...state}
+            const newState = JSON.parse(JSON.stringify(state))
             const arr = Object.keys(newState)
             console.log(arr)
             console.log(newState)

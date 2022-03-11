@@ -51,43 +51,9 @@ function ProfilePage({ user }) {
     const userArrayObj = Object.values(otherUsers)
     const userArr = Object.values(userArrayObj)
 
-    const userPlaylists = useSelector(state => state.playlists)
-    const playArrObj = Object.values(userPlaylists)
-    const playlistArr = Object.values(playArrObj)
-    const playlistNames = new Set()
+    const userPlaylistsObject = useSelector(state => state.playlists)
+    const userPlaylists = Object.values(userPlaylistsObject)
 
-    playlistArr.forEach(playlist => {
-        playlistNames.add(playlist.name)
-    })
-
-    let playlistNamesArray = [...playlistNames];
-
-
-    let objOfPlaylists = {}
-
-    for (let i = 0; i < playlistArr.length; i++){
-        const nameOfPlaylist = playlistArr[i].name
-        if (!objOfPlaylists[nameOfPlaylist]){
-            objOfPlaylists[nameOfPlaylist] = [playlistArr[i].songId]
-        }
-        else {
-            objOfPlaylists[nameOfPlaylist] = [...objOfPlaylists[nameOfPlaylist], playlistArr[i].songId]
-        }
-    }
-
-
-
-    let newObject = {}
-    const manyArraysOfPlay2 = Object.entries(objOfPlaylists)
-    const manyArraysOfPlaySet = manyArraysOfPlay2.map(([key, value]) => (
-
-
-        newObject[key] = Array.from(new Set(value))
-
-    ))
-
-
-    const manyArraysOfPlay = Object.entries(newObject)
 
     const [menu, setMenu] = useState(true)
 
@@ -117,18 +83,18 @@ function ProfilePage({ user }) {
                                     <li className="track-name">{obj.name}</li>
                                     <audio className="track-controls" controls src={obj.songFile}></audio>
                                     <EditButton track={obj} />
-                                    <AddToPlaylist track={obj} playlists={playlistNamesArray}/>
+                                    <AddToPlaylist track={obj} playlists={userPlaylists}/>
                                 </div>
                             ))}</ul>
                         )}
                     </div>
                     <div>
                         {!menu && (
-                            <ul className="unordered-playlists">{manyArraysOfPlay.map(([key, value]) => (
+                            <ul className="unordered-playlists">{userPlaylists.map((playlist) => (
                                 <div className="playlist-list">
-                                    <div className="playlist-name">{key}</div>{
+                                    <div className="playlist-name">{playlist.name}</div>{
                                     trackArr.map((obj) => (
-                                        value.map((songId) => (
+                                        songIdArray.map((songId) => (
                                             <>
                                                 {obj.id === (songId) && (
                                                     <div className="playlist-div">
@@ -141,7 +107,7 @@ function ProfilePage({ user }) {
                                     ))
                                 }
                                     <div className="delete-button">
-                                        <DeleteButton play={key}/>
+                                        <DeleteButton playlist={playlist}/>
                                     </div>
                                 </div>
 
@@ -159,7 +125,7 @@ function ProfilePage({ user }) {
                                     <li className="other-username">{otherUserx.username}</li>
                                 </li>
                                 <button className="other-users-button">
-                                    <NavLink to={{ pathname: `/users/${otherUserx.id}`, otherUserProps: { otherUserx }, userPlaylistx: {playlistNamesArray} }}
+                                    <NavLink to={{ pathname: `/users/${otherUserx.id}`, otherUserProps: { otherUserx }, userPlaylistx: {userPlaylists} }}
                                         style={{
                                             textDecoration: 'none', color: "#f50",
                                             fontFamily: "'Assistant', sans-serif",

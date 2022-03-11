@@ -10,6 +10,8 @@ import "../ProfilePage/ProfilePage.css"
 import { NavLink, useParams, useLocation } from "react-router-dom"
 
 import AddToPlaylistFromOther from "./AddToPlaylistFromOther"
+
+
 function OtherUsersPage({ user }) {
 
     let location = useLocation()
@@ -59,35 +61,8 @@ function OtherUsersPage({ user }) {
     const userArrayObj = Object.values(otherUsers)
     const userArr = Object.values(userArrayObj)
 
-    const userPlaylists = useSelector(state => state.playlists)
-    console.log(userPlaylists)
-    const playArrObj = Object.values(userPlaylists)
-    const playlistArr = Object.values(playArrObj)
-    const playlistNames = new Set()
-
-    playlistArr.forEach(playlist => {
-        playlistNames.add(playlist.name)
-    })
-
-    let otherPlaylistNamesArray = [...playlistNames];
-
-
-    let objOfPlaylists = {}
-
-    for (let i = 0; i < playlistArr.length; i++){
-        const nameOfPlaylist = playlistArr[i].name
-        if (!objOfPlaylists[nameOfPlaylist]){
-            objOfPlaylists[nameOfPlaylist] = [playlistArr[i].songId]
-        }
-        else {
-            objOfPlaylists[nameOfPlaylist] = [...objOfPlaylists[nameOfPlaylist], playlistArr[i].songId]
-        }
-    }
-
-
-
-
-    const manyArraysOfPlay = Object.entries(objOfPlaylists)
+    const userPlaylistsObject = useSelector(state => state.playlists)
+    const otherUserPlaylists = Object.values(userPlaylistsObject)
 
     const [menu, setMenu] = useState(true)
 
@@ -117,18 +92,18 @@ function OtherUsersPage({ user }) {
                                 <button className="like-button">
                                     <i className={"fa fa-regular fa-heart fa-lg"}></i>
                                 </button>
-                                <AddToPlaylistFromOther track={obj} playlists={playlistNamesArray}/>
+                                <AddToPlaylistFromOther track={obj} playlists={userPlaylists}/>
                             </div>
                         ))}</ul>
                     )}
                     </div>
                     <div>
                     {!menu && (
-                       <ul className="unordered-playlists">{manyArraysOfPlay.map(([key, value]) => (
+                       <ul className="unordered-playlists">{otherUserPlaylists.map((playlist) => (
                         <div className="playlist-list">
-                            <div className="playlist-name">{key}</div>{
+                            <div className="playlist-name">{playlist.name}</div>{
                             trackArr.map((obj) => (
-                                value.map((songId) => (
+                                songIdArray.map((songId) => (
                                     <>
                                         {obj.id === (songId) && (
                                             <div className="playlist-div">
