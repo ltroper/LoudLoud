@@ -28,6 +28,26 @@ router.post("/upload", asyncHandler (async (req, res) => {
 
 }))
 
+router.post("/addSong", asyncHandler (async (req, res) => {
+    const { playlistId, songId } = req.body
+    const addPlaylist = await Playlist.findOne({
+        where: {
+            id: playlistId
+        },
+        inlcude: {
+            Song,
+        }
+
+    })
+
+    // const addSong = await Song.findByPk(songId)
+
+    // addPlaylist.songs.push()
+    console.log("PLAYLIST:  ", addPlaylist)
+    return res.json({test: "test"})
+
+}))
+
 router.delete("/delete/:name", asyncHandler (async (req, res) => {
     const name = req.params.name
     const song = await Playlist.findAll({

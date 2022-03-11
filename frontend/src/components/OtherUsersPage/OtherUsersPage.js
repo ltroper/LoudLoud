@@ -13,9 +13,14 @@ import AddToPlaylistFromOther from "./AddToPlaylistFromOther"
 function OtherUsersPage({ user }) {
 
     let location = useLocation()
+    let userId = useParams()
 
-    let otherUser = location.otherUserProps.otherUserx
+
+    const otherUsers = useSelector(state=>state.users)
+    let otherUser = otherUsers[userId.userId]
+
     let playlistNamesArray = location.userPlaylistx.playlistNamesArray
+
 
     const dispatch = useDispatch()
 
@@ -31,6 +36,7 @@ function OtherUsersPage({ user }) {
     useEffect(() => {
         dispatch(getPlaylistsThunk(otherUser.id))
     },[otherUser, dispatch])
+
 
     useEffect(() => {
         dispatch(getAllTracksThunk())
@@ -49,12 +55,12 @@ function OtherUsersPage({ user }) {
         }
     }
 
-    const otherUsers = useSelector(state=>state.users)
 
     const userArrayObj = Object.values(otherUsers)
     const userArr = Object.values(userArrayObj)
 
     const userPlaylists = useSelector(state => state.playlists)
+    console.log(userPlaylists)
     const playArrObj = Object.values(userPlaylists)
     const playlistArr = Object.values(playArrObj)
     const playlistNames = new Set()

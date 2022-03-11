@@ -206,6 +206,13 @@
     margin-left: 1em;
 }
 
+.delete-button {
+    border: none;
+    background-color:rgba(0, 0, 0, 0);
+    margin-left: 1em;
+    display: flex;
+}
+
 .edit-button2 {
     border: none;
     background-color:rgba(0, 0, 0, 0);
@@ -227,6 +234,15 @@
     list-style: none;
     padding-left: 1em;
     height: 4em;
+}
+
+.delete-buttons-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    list-style: none;
+    padding-left: 1em;
+    height: 1em;
 }
 
 .edit-buttons {

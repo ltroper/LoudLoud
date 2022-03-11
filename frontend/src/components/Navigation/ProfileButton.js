@@ -38,10 +38,12 @@ function ProfileButton({ user }) {
             </button>
             {showMenu && (
                 <ul>
-                <li>{user.username}</li>
-                <li>{user.email}</li>
-                <li>
-                  <button onClick={logout}>Log Out</button>
+                <li className="navbar-ele">{user.username}</li>
+                <li className="navbar-ele little">{user.email}</li>
+                <li className="navbar-ele">
+                  <button onClick={logout}
+                  className="navbar-ele-button"
+                  >Log Out</button>
                 </li>
               </ul>
             )}
