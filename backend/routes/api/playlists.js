@@ -1,7 +1,7 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 
-const { User, Song, Playlist } = require('../../db/models');
+const { User, Song, Playlist, Playlist_Song } = require('../../db/models');
 
 
 
@@ -30,14 +30,17 @@ router.post("/upload", asyncHandler (async (req, res) => {
 
 router.post("/addSong", asyncHandler (async (req, res) => {
     const { playlistId, songId } = req.body
+
+    console.log("this is the req.body", req.body);
+
     const addPlaylist = await Playlist.findOne({
         where: {
             id: playlistId
         },
-        inlcude: {
-            Song,
+        include: {
+            model: Song,
+            as: "songs"
         }
-
     })
 
     // const addSong = await Song.findByPk(songId)
