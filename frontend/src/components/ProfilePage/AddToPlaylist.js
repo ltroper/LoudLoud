@@ -95,8 +95,8 @@ function AddToPlaylist({ track, playlists }) {
                     <button
                     onClick={async e => {
                         e.preventDefault()
-                        await dispatch(addPlaylistThunk({ name: newName, userId: sessionUser.id, songId: track.id }))
-                        await dispatch(addSongToPlaylistThunk({}))
+                        const newPlaylist = await dispatch(addPlaylistThunk({ name: newName, userId: sessionUser.id }))
+                        await dispatch(addSongToPlaylistThunk({playlistId: newPlaylist.id, songId: track.id }))
                         .catch(async (res) => {
                             const data = await res.json();
                             if (data && data.errors) setErrors(data.errors)

@@ -12,7 +12,11 @@ const router = express.Router();
 router.get("/:userId", asyncHandler (async (req, res) => {
     const userId = req.params.userId;
     const playlists = await Playlist.findAll({
-        where: {userId}
+        where: {userId},
+        include: {
+            model: Song,
+            as: "songs"
+        }
     })
     return res.json(playlists)
 }))
@@ -51,21 +55,13 @@ router.post("/:playlistId/:songId", asyncHandler (async (req, res) => {
 
 }))
 
-router.delete("/delete/:name", asyncHandler (async (req, res) => {
-    const name = req.params.name
-    const song = await Playlist.findAll({
-        where:{
-            name
-        }
-    })
+router.delete("/:id", asyncHandler (async (req, res) => {
+    const id = req.params.id
+    const playlist = await Playlist.findByPk(id)
 
 
-    song.forEach(element => {
-        console.log(element)
-        element.destroy()
-    });
-
-    return res.json(song)
+    await playlist.destroy()
+    return res.json(playlist)
 }))
 
 

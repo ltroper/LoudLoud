@@ -92,19 +92,13 @@ function ProfilePage({ user }) {
                         {!menu && (
                             <ul className="unordered-playlists">{userPlaylists.map((playlist) => (
                                 <div className="playlist-list">
-                                    <div className="playlist-name">{playlist.name}</div>{
-                                    trackArr.map((obj) => (
-                                        songIdArray.map((songId) => (
-                                            <>
-                                                {obj.id === (songId) && (
-                                                    <div className="playlist-div">
-                                                        <img className="playlist-image" src={obj.artWork}></img>
-                                                        <li className="playlist-songname">{obj.name}</li>
-                                                    </div>
-                                                )}
-                                            </>
+                                    <div className="playlist-name">{playlist?.name}</div>{
+                                        Object.values(playlist?.songs).map((song) => (
+                                            <div className="playlist-div">
+                                                <img className="playlist-image" src={song?.artWork}></img>
+                                                <li className="playlist-songname">{song?.name}</li>
+                                            </div>
                                         ))
-                                    ))
                                 }
                                     <div className="delete-button">
                                         <DeleteButton playlist={playlist}/>

@@ -17,11 +17,15 @@ function OtherUsersPage({ user }) {
     let location = useLocation()
     let userId = useParams()
 
+    const sessionUser = useSelector(state=>state.session.user)
+    const [sessionUserPlaylists, setSessionUserPlaylists] = useState({})
+
 
     const otherUsers = useSelector(state=>state.users)
     let otherUser = otherUsers[userId.userId]
 
-    let playlistNamesArray = location.userPlaylistx.playlistNamesArray
+
+
 
 
     const dispatch = useDispatch()
@@ -37,6 +41,7 @@ function OtherUsersPage({ user }) {
 
     useEffect(() => {
         dispatch(getPlaylistsThunk(otherUser.id))
+        setSessionUserPlaylists(dispatch(getPlaylistsThunk(sessionUser.id)))
     },[otherUser, dispatch])
 
 
@@ -62,6 +67,7 @@ function OtherUsersPage({ user }) {
     const userArr = Object.values(userArrayObj)
 
     const userPlaylistsObject = useSelector(state => state.playlists)
+    console.log("AAAAAAAA", userPlaylistsObject)
     const otherUserPlaylists = Object.values(userPlaylistsObject)
 
     const [menu, setMenu] = useState(true)
@@ -92,7 +98,7 @@ function OtherUsersPage({ user }) {
                                 <button className="like-button">
                                     <i className={"fa fa-regular fa-heart fa-lg"}></i>
                                 </button>
-                                <AddToPlaylistFromOther track={obj} playlists={userPlaylists}/>
+                                <AddToPlaylistFromOther track={obj} playlists={sessionUserPlaylists}/>
                             </div>
                         ))}</ul>
                     )}
@@ -102,17 +108,11 @@ function OtherUsersPage({ user }) {
                        <ul className="unordered-playlists">{otherUserPlaylists.map((playlist) => (
                         <div className="playlist-list">
                             <div className="playlist-name">{playlist.name}</div>{
-                            trackArr.map((obj) => (
-                                songIdArray.map((songId) => (
-                                    <>
-                                        {obj.id === (songId) && (
-                                            <div className="playlist-div">
-                                                <img className="playlist-image" src={obj.artWork}></img>
-                                                <li className="playlist-songname">{obj.name}</li>
-                                            </div>
-                                        )}
-                                    </>
-                                ))
+                             Object.values(playlist?.songs).map((song) => (
+                                <div className="playlist-div">
+                                    <img className="playlist-image" src={song?.artWork}></img>
+                                    <li className="playlist-songname">{song?.name}</li>
+                                </div>
                             ))
                         }</div>
                     ))}</ul>
@@ -130,7 +130,7 @@ function OtherUsersPage({ user }) {
                                     <li className="other-username">{otherUserx.username}</li>
                                 </li>
                                 <button className="other-users-button">
-                                <NavLink to={{pathname:`/users/${otherUserx.id}`, otherUserProps: {otherUserx}, userPlaylistx: {playlistNamesArray}}}
+                                <NavLink to={{pathname:`/users/${otherUserx.id}`}}
                                     style={{ textDecoration: 'none', color:"#f50",
                                     fontFamily: "'Assistant', sans-serif",
                                     letterSpacing: "0.5px", fontSize: "15px"}}>
