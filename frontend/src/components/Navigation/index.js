@@ -14,11 +14,17 @@ function Navigation({ isLoaded }) {
   return (
     <ul>
       <li className='nav-bar'>
-        <NavLink exact to="/" >
-          <img className='logo-splash2' src={logo} alt="logo" />
-        </NavLink>
+        <input
+        placeholder='Searchbar coming soon!'
+        className='searchbar'
+        />
+        <div>
+          <NavLink exact to="/" >
+            <img className='logo-splash2' src={logo} alt="logo" />
+          </NavLink>
+        </div>
         <div className='profile-splash'>
-          <ProfileButton user={sessionUser} />
+          <ProfileButton className="profile-splash" user={sessionUser} />
         </div>
       </li>
     </ul>

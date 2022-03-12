@@ -17,26 +17,25 @@ function OtherUsersPage({ user }) {
     let location = useLocation()
     let userId = useParams()
 
-    const sessionUser = useSelector(state=>state.session.user)
-
-
-    const otherUsers = useSelector(state=>state.users)
-    let otherUser = otherUsers[userId.userId]
-
-
-
-
 
     const dispatch = useDispatch()
-
-
-    useEffect(()=> {
-        dispatch(getTracksThunk(otherUser.id))
-    },[otherUser, dispatch])
 
     useEffect(()=>{
         dispatch(getUsersThunk(user.id))
     },[user, dispatch])
+
+    const sessionUser = useSelector(state=>state.session.user)
+
+    const otherUsers = useSelector(state=>state.users)
+    let otherUserx = otherUsers[userId.userId]
+
+    const [otherUser, setOtherUser] = useState(otherUserx)
+
+    console.log(otherUser)
+
+    useEffect(()=> {
+        dispatch(getTracksThunk(otherUser.id))
+    },[otherUser, dispatch])
 
     useEffect(() => {
         dispatch(getPlaylistsThunk(otherUser.id))
@@ -47,6 +46,7 @@ function OtherUsersPage({ user }) {
     useEffect(() => {
         dispatch(getAllTracksThunk())
     }, [user, dispatch])
+
 
 
     const allTracks = useSelector(state => state.tracks)
@@ -106,7 +106,7 @@ function OtherUsersPage({ user }) {
                             <div className="track-list">
                                 <li className="track-name">{obj.name}</li>
                                 <audio className="track-controls" controls src={obj.songFile}></audio>
-                                <button className="like-button">
+                                <button className="like-button" >
                                     <i className={"fa fa-regular fa-heart fa-lg"}></i>
                                 </button>
                                 <AddToPlaylistFromOther track={obj} playlists={sessionUserPlaylists}/>

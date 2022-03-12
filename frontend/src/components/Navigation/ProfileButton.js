@@ -34,13 +34,14 @@ function ProfileButton({ user }) {
       return (
           <>
             <button onClick={openMenu} className="nav-bar-ele">
-                <i className="fa-solid fa-user"></i>
+                <i className="fa-solid fa-user fa-2xl"></i>
             </button>
             {showMenu && (
-                <ul>
-                <li className="navbar-ele">{user.username}</li>
-                <li className="navbar-ele little">{user.email}</li>
-                <li className="navbar-ele">
+                <ul className="drop-down-nav">
+                <li className="navbar-ele">{user.username}
+                  <li className="little">{user.email}</li>
+                </li>
+                <li>
                   <button onClick={logout}
                   className="navbar-ele-button"
                   >Log Out</button>

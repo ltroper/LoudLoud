@@ -8,43 +8,49 @@
     display: grid;
     grid-template-areas:
     "a b c";
-    grid-template-columns: 25% 50% 25%;
+    grid-template-columns: 25% 45% 30%;
     grid-template-rows: 60px;
 }
 
-
+.searchbar {
+    grid-area: b;
+    height: 50%;
+    width: 70%;
+    margin-top: 0.82em;
+    border-radius: 5px;
+    font-size: 1em;
+}
 
 .logo-splash2 {
     grid-area: a;
     height: auto;
     width: auto;
-    margin-left: 30px;
-    padding-right: 30px;
+    margin-left: 60px;
+    padding-right: 60px;
     border-right: 1px solid rgb(92, 92, 92);
 }
 
 .profile-splash {
     grid-area: c;
     display: flex;
+    padding-left: 1em;
+    border-left:  1px solid rgb(92, 92, 92);
 }
+
 
 .nav-bar-ele {
-    align-items: center;
-    justify-content: flex-end;
     background-color: rgba(0, 0, 0, 0);
+    border: none;
     color: whitesmoke;
-
+    height: 50%;
+    margin-top: 1em;
 }
 
-.navbar-ele {
-    color: whitesmoke;
-    list-style: none;
-    font-family: 'Assistant', sans-serif;
+.fa-user:hover {
+    cursor: pointer;
 }
 
-.little {
-    font-size: 12px;
-}
+
 
 .navbar-ele-button {
     background-color:rgba(0, 0, 0, 0);
@@ -52,6 +58,31 @@
     border-style: solid;
     color: whitesmoke;
     width: 8em;
-    height: 1.5em;
+    height: 2em;
     border-radius: 5px;
+    margin-left: 1em;
+    margin-top: 0.7em;
+    margin-right: 0.5em;
+    font-family: 'Assistant', sans-serif;
+    font-size: 1em
+}
+
+.navbar-ele-button:hover{
+    cursor: pointer;
+}
+
+.drop-down-nav {
+    display: flex;
+    padding-left: 1.5em;
+}
+
+.navbar-ele {
+    color: whitesmoke;
+    list-style: none;
+    font-family: 'Assistant', sans-serif;
+    margin-top: 0.5em;
+}
+
+.little {
+    font-size: 12px;
 }

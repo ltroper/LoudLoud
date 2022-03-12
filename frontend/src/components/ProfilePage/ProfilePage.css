@@ -276,6 +276,7 @@
 }
 
 .fa-heart:hover {
+    cursor: pointer;
     color: #f50;
 }
 
