@@ -57,8 +57,18 @@ router.post("/:playlistId/:songId", asyncHandler (async (req, res) => {
 
 router.delete("/:id", asyncHandler (async (req, res) => {
     const id = req.params.id
+
+    const playlistSongs = await Playlist_Song.findAll({
+        where: {
+            playlistId: id
+        }
+    })
     const playlist = await Playlist.findByPk(id)
 
+
+    for (let i = 0; i < playlistSongs.length; i++){
+       await playlistSongs[i].destroy()
+    }
 
     await playlist.destroy()
     return res.json(playlist)

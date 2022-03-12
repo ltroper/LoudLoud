@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 
 import { addPlaylistThunk, addSongToPlaylistThunk } from '../../store/playlists'
-import { getPlaylistsThunk } from "../../store/playlists";
 import '../ProfilePage/ProfilePage.css';
 
 function AddToPlaylistFromOther({ track, playlists }) {
@@ -54,16 +53,6 @@ function AddToPlaylistFromOther({ track, playlists }) {
     }, [input]);
 
 
-    // const userPlaylists = useSelector(state => state.playlists)
-    // const playArrObj = Object.values(userPlaylists)
-    // const playlistArr = Object.values(playArrObj)
-    // const playlistNames = new Set()
-
-    // playlistArr.forEach(playlist => {
-    //     playlistNames.add(playlist.name)
-    // })
-
-    // let playlistNamesArray = [...playlistNames];
 
 
     return (
@@ -77,10 +66,9 @@ function AddToPlaylistFromOther({ track, playlists }) {
                         <li>
                             <button className="edit-buttons2" onClick={async e => {
                                 e.preventDefault()
-                                await dispatch(addSongToPlaylistThunk({ songId: track.id }))
+                                await dispatch(addSongToPlaylistThunk({ playlistId: playlist.id, songId: track.id }))
                                     .catch(async (res) => {
-                                        const data = await res.json();
-                                        if (data && data.errors) setErrors(data.errors)
+                                        return
                                     })
                                 history.push("/")
                             }}>
@@ -109,9 +97,9 @@ function AddToPlaylistFromOther({ track, playlists }) {
                 <button
                 onClick={async e => {
                     e.preventDefault()
-                    await dispatch(addPlaylistThunk({ name: newName, userId: sessionUser.id, songId: track.id }))
-                    await dispatch(addSongToPlaylistThunk({}))
-                    .catch(async (res) => {
+                    const newPlaylist = await dispatch(addPlaylistThunk({ name: newName, userId: sessionUser.id }))
+                    await dispatch(addSongToPlaylistThunk({playlistId: newPlaylist.id, songId: track.id }))
+                .catch(async (res) => {
                         return
                     })
                     history.push("/")

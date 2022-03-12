@@ -4,6 +4,7 @@ const GET_TRACKS = "tracks/profile"
 const UPLOAD_TRACK = "tracks/upload"
 const DELETE_TRACK = "tracks/delete"
 const GET_ALLTRACKS = "songs/all"
+const UPDATE_TRACK = "songs/update"
 
 const getTracks = (tracks) => {
     return {
@@ -31,6 +32,29 @@ const deleteTrack = (trackId) => {
         type: DELETE_TRACK,
         trackId
     }
+}
+
+const updateTrack = (track) => {
+    return {
+        type: UPDATE_TRACK,
+        track
+    }
+}
+
+export const updateTrackThunk = (track) => async (dispatch) => {
+    const {name, artWork, songFile, trackId} = track
+
+    const res = await csrfFetch(`/api/tracks/update/${trackId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            name,
+            artWork,
+            songFile
+        }),
+    })
+    const data = await res.json()
+        dispatch(updateTrack(data))
 }
 
 export const deleteTrackThunk = (trackId) => async (dispatch) => {
@@ -95,6 +119,11 @@ const tracksReducer = (state = initialState, action) => {
             return newState;
         }
         case UPLOAD_TRACK: {
+            newState = {...state}
+            newState[action.track.id] = action.track
+            return newState
+        }
+        case UPDATE_TRACK: {
             newState = {...state}
             newState[action.track.id] = action.track
             return newState

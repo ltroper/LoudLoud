@@ -24,8 +24,7 @@ const EditFormPage = ({user}) =>{
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
-        dispatch(trackActions.deleteTrackThunk(trackId))
-        dispatch(trackActions.uploadTrackThunk({name, userId: user.id, artWork: art, songFile: song}))
+        dispatch(trackActions.updateTrackThunk({name, artWork: art, songFile: song, trackId}))
         .catch(async (res) => {
             const data = await res.json();
             if (data && data.errors) setErrors(data.errors)

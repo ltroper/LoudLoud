@@ -52,7 +52,14 @@ function ProfilePage({ user }) {
     const userArr = Object.values(userArrayObj)
 
     const userPlaylistsObject = useSelector(state => state.playlists)
-    const userPlaylists = Object.values(userPlaylistsObject)
+    const sessionUserPlaylists = Object.values(userPlaylistsObject)
+
+    let userPlaylists = []
+    sessionUserPlaylists.forEach(playlist => {
+        if (playlist.userId == user.id) {
+            userPlaylists.push(playlist)
+        }
+    })
 
 
     const [menu, setMenu] = useState(true)

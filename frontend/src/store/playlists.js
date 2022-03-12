@@ -51,7 +51,7 @@ export const getPlaylistsThunk = (userId) => async (dispatch) => {
 
 }
 
-export const addSongToPlaylistThunk = (playlistId, songId) => async (dispatch) => {
+export const addSongToPlaylistThunk = ({playlistId, songId}) => async (dispatch) => {
     const res = await csrfFetch(`/api/playlists/${playlistId}/${songId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" }

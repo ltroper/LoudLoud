@@ -18,7 +18,6 @@ function OtherUsersPage({ user }) {
     let userId = useParams()
 
     const sessionUser = useSelector(state=>state.session.user)
-    const [sessionUserPlaylists, setSessionUserPlaylists] = useState({})
 
 
     const otherUsers = useSelector(state=>state.users)
@@ -41,7 +40,7 @@ function OtherUsersPage({ user }) {
 
     useEffect(() => {
         dispatch(getPlaylistsThunk(otherUser.id))
-        setSessionUserPlaylists(dispatch(getPlaylistsThunk(sessionUser.id)))
+        dispatch(getPlaylistsThunk(sessionUser.id))
     },[otherUser, dispatch])
 
 
@@ -67,8 +66,20 @@ function OtherUsersPage({ user }) {
     const userArr = Object.values(userArrayObj)
 
     const userPlaylistsObject = useSelector(state => state.playlists)
-    console.log("AAAAAAAA", userPlaylistsObject)
-    const otherUserPlaylists = Object.values(userPlaylistsObject)
+    const anotherUserPlaylists = Object.values(userPlaylistsObject)
+
+    let otherUserPlaylists = []
+    let sessionUserPlaylists = []
+
+    anotherUserPlaylists.forEach(playlist => {
+        if(playlist.userId == userId.userId){
+            otherUserPlaylists.push(playlist)
+        }
+        else {
+            sessionUserPlaylists.push(playlist)
+        }
+    })
+
 
     const [menu, setMenu] = useState(true)
 
