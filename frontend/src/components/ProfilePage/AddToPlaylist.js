@@ -63,8 +63,6 @@ function AddToPlaylist({ track, playlists }) {
                         <li>
                             <button className="edit-buttons2" onClick={async e => {
                                 e.preventDefault()
-                                console.log("PLAYLIST", playlist)
-                                console.log("TRACK", track)
                                 await dispatch(addSongToPlaylistThunk({ playlistId: playlist.id, songId: track.id }))
                                     .catch(async (res) => {
                                         return

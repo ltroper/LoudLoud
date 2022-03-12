@@ -39,7 +39,7 @@ function EditButton({ track }) {
                 <i className="fa fa-light fa-sliders"></i>
             </button>
             {showMenu && (
-                <ul className="edit-buttons-list">
+                <ul className="edit-buttons-list2">
                     <li>
                         <button className="edit-buttons">
                         <NavLink to={{pathname:`/edit/${track.id}`, userProps: {track}}} style={{ textDecoration: 'none', color: 'white'}}>
