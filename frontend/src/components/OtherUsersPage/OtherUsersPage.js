@@ -10,12 +10,22 @@ import "../ProfilePage/ProfilePage.css"
 import { NavLink, useParams, useLocation } from "react-router-dom"
 
 import AddToPlaylistFromOther from "./AddToPlaylistFromOther"
+
+
 function OtherUsersPage({ user }) {
 
     let location = useLocation()
+    let userId = useParams()
 
-    let otherUser = location.otherUserProps.otherUserx
-    let playlistNamesArray = location.userPlaylistx.playlistNamesArray
+    const sessionUser = useSelector(state=>state.session.user)
+
+
+    const otherUsers = useSelector(state=>state.users)
+    let otherUser = otherUsers[userId.userId]
+
+
+
+
 
     const dispatch = useDispatch()
 
@@ -30,7 +40,9 @@ function OtherUsersPage({ user }) {
 
     useEffect(() => {
         dispatch(getPlaylistsThunk(otherUser.id))
+        dispatch(getPlaylistsThunk(sessionUser.id))
     },[otherUser, dispatch])
+
 
     useEffect(() => {
         dispatch(getAllTracksThunk())
@@ -49,39 +61,25 @@ function OtherUsersPage({ user }) {
         }
     }
 
-    const otherUsers = useSelector(state=>state.users)
 
     const userArrayObj = Object.values(otherUsers)
     const userArr = Object.values(userArrayObj)
 
-    const userPlaylists = useSelector(state => state.playlists)
-    const playArrObj = Object.values(userPlaylists)
-    const playlistArr = Object.values(playArrObj)
-    const playlistNames = new Set()
+    const userPlaylistsObject = useSelector(state => state.playlists)
+    const anotherUserPlaylists = Object.values(userPlaylistsObject)
 
-    playlistArr.forEach(playlist => {
-        playlistNames.add(playlist.name)
-    })
+    let otherUserPlaylists = []
+    let sessionUserPlaylists = []
 
-    let otherPlaylistNamesArray = [...playlistNames];
-
-
-    let objOfPlaylists = {}
-
-    for (let i = 0; i < playlistArr.length; i++){
-        const nameOfPlaylist = playlistArr[i].name
-        if (!objOfPlaylists[nameOfPlaylist]){
-            objOfPlaylists[nameOfPlaylist] = [playlistArr[i].songId]
+    anotherUserPlaylists.forEach(playlist => {
+        if(playlist.userId == userId.userId){
+            otherUserPlaylists.push(playlist)
         }
         else {
-            objOfPlaylists[nameOfPlaylist] = [...objOfPlaylists[nameOfPlaylist], playlistArr[i].songId]
+            sessionUserPlaylists.push(playlist)
         }
-    }
+    })
 
-
-
-
-    const manyArraysOfPlay = Object.entries(objOfPlaylists)
 
     const [menu, setMenu] = useState(true)
 
@@ -111,27 +109,21 @@ function OtherUsersPage({ user }) {
                                 <button className="like-button">
                                     <i className={"fa fa-regular fa-heart fa-lg"}></i>
                                 </button>
-                                <AddToPlaylistFromOther track={obj} playlists={playlistNamesArray}/>
+                                <AddToPlaylistFromOther track={obj} playlists={sessionUserPlaylists}/>
                             </div>
                         ))}</ul>
                     )}
                     </div>
                     <div>
                     {!menu && (
-                       <ul className="unordered-playlists">{manyArraysOfPlay.map(([key, value]) => (
+                       <ul className="unordered-playlists">{otherUserPlaylists.map((playlist) => (
                         <div className="playlist-list">
-                            <div className="playlist-name">{key}</div>{
-                            trackArr.map((obj) => (
-                                value.map((songId) => (
-                                    <>
-                                        {obj.id === (songId) && (
-                                            <div className="playlist-div">
-                                                <img className="playlist-image" src={obj.artWork}></img>
-                                                <li className="playlist-songname">{obj.name}</li>
-                                            </div>
-                                        )}
-                                    </>
-                                ))
+                            <div className="playlist-name">{playlist.name}</div>{
+                             Object.values(playlist?.songs).map((song) => (
+                                <div className="playlist-div">
+                                    <img className="playlist-image" src={song?.artWork}></img>
+                                    <li className="playlist-songname">{song?.name}</li>
+                                </div>
                             ))
                         }</div>
                     ))}</ul>
@@ -149,7 +141,7 @@ function OtherUsersPage({ user }) {
                                     <li className="other-username">{otherUserx.username}</li>
                                 </li>
                                 <button className="other-users-button">
-                                <NavLink to={{pathname:`/users/${otherUserx.id}`, otherUserProps: {otherUserx}, userPlaylistx: {playlistNamesArray}}}
+                                <NavLink to={{pathname:`/users/${otherUserx.id}`}}
                                     style={{ textDecoration: 'none', color:"#f50",
                                     fontFamily: "'Assistant', sans-serif",
                                     letterSpacing: "0.5px", fontSize: "15px"}}>

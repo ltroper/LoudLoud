@@ -23,7 +23,7 @@ function SplashPage({isLoaded}){
                 <div>
                     <div className='content'>
                         <div className='upper-container'>
-                            <NavLink to="/" >
+                            <NavLink exact to="/" >
                               <img className='logo-splash' src={logo} alt="logo" />
                             </NavLink>
                             <div className='signup-login-buttons'>

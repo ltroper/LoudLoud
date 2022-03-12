@@ -72,13 +72,6 @@ module.exports = (sequelize, DataTypes) => {
     })
 
     User.belongsToMany(models.Song, {
-      through: 'Playlist',
-      foreignKey: 'userId',
-      otherKey: 'songId',
-      as: 'Playlists'
-    })
-
-    User.belongsToMany(models.Song, {
       through: 'Comment',
       foreignKey: 'userId',
       otherKey: 'songId',

@@ -5,7 +5,7 @@ import * as trackActions from '../../store/tracks'
 import './ProfilePage.css';
 import { deletePlaylistThunk } from "../../store/playlists";
 
-function DeleteButton({ play }) {
+function DeleteButton({ playlist }) {
 
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
@@ -29,17 +29,17 @@ function DeleteButton({ play }) {
 
       const deletePlaylist = (e) => {
         e.preventDefault();
-        dispatch(deletePlaylistThunk(play));
-        
+        dispatch(deletePlaylistThunk(playlist.id));
+
       };
 
       return (
           <>
-            <button onClick={openMenu} className="edit-button">
+            <button onClick={openMenu} className="delete-button">
                 <i className="fa fa-light fa-sliders"></i>
             </button>
             {showMenu && (
-                <ul className="edit-buttons-list">
+                <ul className="delete-buttons-list">
                     <li>
                         <button onClick={deletePlaylist} className="edit-buttons">Delete</button>
                     </li>

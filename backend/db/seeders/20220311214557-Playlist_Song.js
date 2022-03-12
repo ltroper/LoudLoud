@@ -12,27 +12,34 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-      return queryInterface.bulkInsert('Playlists', [
+      return queryInterface.bulkInsert('Playlist_Songs', [
         {
-          name: 'MyPlaylist',
-          userId: 1,
+          playlistId: 1,
+          songId: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: 'MyPlaylist2',
-          userId: 1,
+          playlistId: 2,
+          songId: 2,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          name: 'DemoPlaylist',
-          userId: 2,
+          playlistId: 3,
+          songId: 3,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          playlistId: 3,
+          songId: 4,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
       ])
-    },
+
+  },
 
   down: (queryInterface, Sequelize) => {
     /*
@@ -41,6 +48,6 @@ module.exports = {
 
       Example:
       */
-   return queryInterface.bulkDelete('Playlists', null, {});
+   return queryInterface.bulkDelete('Playlist_Songs', null, {});
   }
 };
