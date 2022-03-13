@@ -75,7 +75,7 @@ function SplashPage({isLoaded}){
                             </div>
                         </div>
                     </div>
-                    <h2 className='splash-h2'>Popular Tracks</h2>
+                    <h2 className='splash-h2 more-splash'>Popular Tracks</h2>
                     <ul className='track-list2'>{trackArr.map(track => (
                           <div className='track-group'>
                             <img src={track.artWork} className="track-image" alt='artwork'/>

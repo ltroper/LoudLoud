@@ -111,6 +111,11 @@ img {
     word-spacing: 1px;
 }
 
+.more-splash {
+    padding-bottom: 0.3em;
+    border-bottom:1px solid rgb(223, 223, 223);
+}
+
 .track-list2 {
     display: flex;
     flex-wrap: wrap;
