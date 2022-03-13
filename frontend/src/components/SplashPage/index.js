@@ -1,7 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+
 import "./SplashPage.css"
+
+import { getAllTracksThunk } from "../../store/tracks"
+
 import LoginFormModal from '../LoginFormModal';
 import DemoLogIn from '../LoginFormModal/DemoLogIn';
 import logo from '../../media/logoPro.png'
@@ -9,6 +14,18 @@ import ProfilePage from '../ProfilePage/ProfilePage';
 
 function SplashPage({isLoaded}){
     const sessionUser = useSelector(state => state.session.user);
+
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+      dispatch(getAllTracksThunk())
+  }, [dispatch])
+
+  const allTracks = useSelector(state => state.tracks)
+  const trackArrayObj = Object.values(allTracks)
+  const trackArr = Object.values(trackArrayObj)
+
 
     let splash;
     if (sessionUser) {
@@ -58,6 +75,14 @@ function SplashPage({isLoaded}){
                             </div>
                         </div>
                     </div>
+                    <h2 className='splash-h2'>Popular Tracks</h2>
+                    <ul className='track-list2'>{trackArr.map(track => (
+                          <div className='track-group'>
+                            <img src={track.artWork} className="track-image" alt='artwork'/>
+                            <li className="track-name">{track.name}</li>
+                          </div>
+                        ))}
+                    </ul>
                 </div>
             </body>
         </>

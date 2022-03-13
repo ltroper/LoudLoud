@@ -24,7 +24,7 @@ function App() {
 
   return (
     <>
-      ({sessionUser && (<Navigation />)})
+      {sessionUser && (<Navigation />)}
       {isLoaded && (
         <Switch>
           <Route exact path="/">
