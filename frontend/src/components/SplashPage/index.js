@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import "./SplashPage.css"
 import LoginFormModal from '../LoginFormModal';
+import DemoLogIn from '../LoginFormModal/DemoLogIn';
 import logo from '../../media/logoPro.png'
 import ProfilePage from '../ProfilePage/ProfilePage';
 
@@ -29,6 +30,9 @@ function SplashPage({isLoaded}){
                             <div className='signup-login-buttons'>
                                 <div>
                                   <LoginFormModal />
+                                </div>
+                                <div >
+                                  <DemoLogIn />
                                 </div>
                                 <button className='button signup-button'>
                                     <NavLink style={{ textDecoration: 'none', color: 'white', fontFamily: "'Assistant', sans-serif",
