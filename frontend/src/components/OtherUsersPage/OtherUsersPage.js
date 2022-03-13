@@ -20,28 +20,24 @@ function OtherUsersPage({ user }) {
 
     const dispatch = useDispatch()
 
+    useEffect(()=>{
+        dispatch(getUsersThunk(user.id))
+    },[user, dispatch])
 
     const sessionUser = useSelector(state=>state.session.user)
 
     const otherUsers = useSelector(state=>state.users)
-    let otherUserx = otherUsers[userId.userId]
+    let otherUser = otherUsers[userId.userId]
 
-    const state = useSelector(state=>state)
-    const [otherUser, setOtherUser] = useState(otherUserx)
-
-    useEffect(()=>{
-        dispatch(getUsersThunk(user.id))
-    },[user, dispatch, otherUser])
 
     useEffect(()=> {
         dispatch(getTracksThunk(otherUser.id))
-    },[otherUsers, dispatch, user, otherUser])
+    },[otherUser, dispatch])
 
     useEffect(() => {
         dispatch(getPlaylistsThunk(otherUser.id))
         dispatch(getPlaylistsThunk(sessionUser.id))
-    },[otherUsers, dispatch, user, otherUser])
-
+    },[otherUser, dispatch])
 
 
     useEffect(() => {
