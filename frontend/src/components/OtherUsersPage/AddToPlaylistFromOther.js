@@ -52,6 +52,13 @@ function AddToPlaylistFromOther({ track, playlists }) {
         return () => document.removeEventListener("click", closeInput);
     }, [input]);
 
+    const userPlaylists = []
+
+    for (let i = 0; i < playlists.length; i++){
+        if (playlists[i].userId == sessionUser.id){
+            userPlaylists.push(playlists[i])
+        }
+    }
 
 
 
@@ -62,7 +69,7 @@ function AddToPlaylistFromOther({ track, playlists }) {
             </button>
             {showMenu && (
                 <ul className="edit-buttons-list">
-                    {playlists.map((playlist) => (
+                    {userPlaylists.map((playlist) => (
                         <li>
                             <button className="edit-buttons2" onClick={async e => {
                                 e.preventDefault()
