@@ -21,21 +21,21 @@ function OtherUsersPage({ user }) {
     const dispatch = useDispatch()
 
     useEffect(()=>{
-        dispatch(getUsersThunk(user.id))
+        dispatch(getUsersThunk(user?.id))
     },[user, dispatch])
 
     const sessionUser = useSelector(state=>state.session.user)
 
     const otherUsers = useSelector(state=>state.users)
-    let otherUser = otherUsers[userId.userId]
+    let otherUser = otherUsers[userId?.userId]
 
 
     useEffect(()=> {
-        dispatch(getTracksThunk(otherUser.id))
+        dispatch(getTracksThunk(otherUser?.id))
     },[otherUser, dispatch])
 
     useEffect(() => {
-        dispatch(getPlaylistsThunk(otherUser.id))
+        dispatch(getPlaylistsThunk(otherUser?.id))
         dispatch(getPlaylistsThunk(sessionUser.id))
     },[otherUser, dispatch])
 
@@ -79,14 +79,15 @@ function OtherUsersPage({ user }) {
 
 
     const [menu, setMenu] = useState(true)
+  
 
 
     return (
         <>
             <body className="profile-body">
                 <div className="upper-profile">
-                    <img src={otherUser.profilePic} className="profile-pic"/>
-                    <h2 className="username">{otherUser.fullName}</h2>
+                    <img src={otherUser?.profilePic} className="profile-pic"/>
+                    <h2 className="username">{otherUser?.fullName}</h2>
                 </div>
                 <div className="mid-profile">
                     <ul className="profile-tabs">
@@ -99,11 +100,13 @@ function OtherUsersPage({ user }) {
                     </ul>
                     <div>
                     {menu && (
-                        <ul>{otherUserTrackArr.map((obj)=>(
+                        <ul>{otherUserTrackArr?.map((obj)=>(
                             <div className="track-list">
                                 <li className="track-name">{obj.name}</li>
                                 <audio className="track-controls" controls src={obj.songFile}></audio>
-                                <button className="like-button" >
+                                <button
+                                className="like-button"
+                                 >
                                     <i className={"fa fa-regular fa-heart fa-lg"}></i>
                                 </button>
                                 <AddToPlaylistFromOther track={obj} playlists={sessionUserPlaylists}/>

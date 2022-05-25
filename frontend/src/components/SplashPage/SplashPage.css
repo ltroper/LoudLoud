@@ -66,6 +66,12 @@ img {
     border-radius: 5px;
 }
 
+.login-button:hover {
+    background-color:rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 85, 0, 0.3);
+    transition: background-color 0.3s;
+    transition: border-color 0.3s;
+}
 .button {
     height: 30px;
 }
@@ -78,6 +84,13 @@ img {
     margin-top: 20px;
     width: 130px;
     border-radius: 5px;
+}
+
+.signup-button:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-color: rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s;
+    transition: border-color 0.3s;
 }
 
 .free-button {
@@ -94,6 +107,14 @@ img {
     border-style: solid;
     color: #fff;
     border-radius: 5px;
+}
+
+.free-button:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-color: rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s;
+    transition: border-color 0.3s;
+    cursor: pointer;
 }
 
 .splash-h2 {
@@ -135,9 +156,6 @@ img {
     border-radius: 5px;
 }
 
-.track-group:hover{
-    background-color: rgb(223, 223, 223);
-}
 .track-image {
     height: 10em;
     border-radius: 5px;

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import logo from '../../media/logoPro.png'
+import SearchBar from './SearchBar';
 
 
 
@@ -14,15 +15,12 @@ function Navigation({ isLoaded }) {
   return (
     <ul>
       <li className='nav-bar'>
-        <input
-        placeholder='Searchbar coming soon!'
-        className='searchbar'
-        />
         <div>
           <NavLink exact to="/" >
             <img className='logo-splash2' src={logo} alt="logo" />
           </NavLink>
         </div>
+        <SearchBar />
         <div className='profile-splash'>
           <ProfileButton className="profile-splash" user={sessionUser} />
         </div>
