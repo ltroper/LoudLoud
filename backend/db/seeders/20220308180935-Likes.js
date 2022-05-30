@@ -18,31 +18,7 @@ module.exports = {
           songId: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
-        },
-        {
-          userId: 2,
-          songId: 1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          userId: 3,
-          songId: 1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          userId: 1,
-          songId: 2,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          userId: 2,
-          songId: 2,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
+        }
       ])
   },
 

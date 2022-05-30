@@ -348,6 +348,12 @@
     border-radius: 5px;
 }
 
+.upload-button:hover {
+    background-color: rgba(255, 85, 0, 0.7);
+    transition: background-color 0.3s;
+
+}
+
 .delete-button {
     margin-left: auto;
     padding-right: 1em;

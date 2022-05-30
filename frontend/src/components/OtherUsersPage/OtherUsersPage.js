@@ -5,6 +5,7 @@ import { getTracksThunk } from "../../store/tracks"
 import { getUsersThunk } from "../../store/users"
 import { getPlaylistsThunk } from "../../store/playlists"
 import { getAllTracksThunk } from "../../store/tracks"
+import { getAllLikesThunk } from "../../store/likes"
 
 import "../ProfilePage/ProfilePage.css"
 import { NavLink, useParams, useLocation } from "react-router-dom"
@@ -24,11 +25,15 @@ function OtherUsersPage({ user }) {
         dispatch(getUsersThunk(user?.id))
     },[user, dispatch])
 
+
     const sessionUser = useSelector(state=>state.session.user)
 
     const otherUsers = useSelector(state=>state.users)
     let otherUser = otherUsers[userId?.userId]
 
+    useEffect(() => {
+        dispatch(getAllLikesThunk(sessionUser?.id))
+    }, [dispatch])
 
     useEffect(()=> {
         dispatch(getTracksThunk(otherUser?.id))
@@ -79,7 +84,7 @@ function OtherUsersPage({ user }) {
 
 
     const [menu, setMenu] = useState(true)
-  
+
 
 
     return (
