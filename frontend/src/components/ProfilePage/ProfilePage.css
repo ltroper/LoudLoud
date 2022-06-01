@@ -214,6 +214,12 @@
     margin-left: 1em;
 }
 
+.liked-button {
+    border: none;
+    background-color:rgba(0, 0, 0, 0);
+    margin-left: 1em;
+}
+
 
 .edit-button {
     border: none;
@@ -326,6 +332,10 @@
 .fa-heart:hover {
     cursor: pointer;
     color: rgba(255, 85, 0, 0.5);
+}
+
+.likedSong {
+    color: rgb(255, 85, 0);
 }
 
 .fa-sliders:hover {

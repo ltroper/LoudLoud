@@ -20,7 +20,6 @@ const SearchBar = () => {
     const userObj = useSelector(state => state.users)
     const userArr = Object.values(userObj)
     const filteredArr = userArr.filter(ele => ele?.id !== sessionUser?.id)
-    console.log(filteredArr)
 
     const [search, setSearch] = useState('')
 

@@ -5,7 +5,7 @@ import { getTracksThunk } from "../../store/tracks"
 import { getUsersThunk } from "../../store/users"
 import { getPlaylistsThunk } from "../../store/playlists"
 import { getAllTracksThunk } from "../../store/tracks"
-import { getAllLikesThunk } from "../../store/likes"
+import { getAllLikesThunk, newLikeThunk, deleteLikeThunk } from "../../store/likes"
 
 import "../ProfilePage/ProfilePage.css"
 import { NavLink, useParams, useLocation } from "react-router-dom"
@@ -51,6 +51,8 @@ function OtherUsersPage({ user }) {
 
 
 
+
+
     const allTracks = useSelector(state => state.tracks)
     const trackArrayObj = Object.values(allTracks)
     const trackArr = Object.values(trackArrayObj)
@@ -85,6 +87,20 @@ function OtherUsersPage({ user }) {
 
     const [menu, setMenu] = useState(true)
 
+    const [songs, setSongs] = useState([])
+
+    const allLikes = useSelector(state => state.likes)
+    const likedSongs = Object.values(allLikes)
+
+
+    Object.prototype.getKeyByValue = function( value ) {
+        for( const prop in this ) {
+            if( this.hasOwnProperty( prop ) ) {
+                 if( this[ prop ] === value )
+                     return prop;
+            }
+        }
+    }
 
 
     return (
@@ -110,9 +126,20 @@ function OtherUsersPage({ user }) {
                                 <li className="track-name">{obj.name}</li>
                                 <audio className="track-controls" controls src={obj.songFile}></audio>
                                 <button
+                                onClick={likedSongs.includes(obj.id) ?
+                                async e => {
+                                    e.preventDefault()
+                                    dispatch(deleteLikeThunk(allLikes.getKeyByValue(obj.id)))
+                                }
+                                :
+                                async e => {
+                                    e.preventDefault()
+                                    dispatch(newLikeThunk({userId: sessionUser.id, songId:obj.id}))
+                                }
+                                }
                                 className="like-button"
                                  >
-                                    <i className={"fa fa-regular fa-heart fa-lg"}></i>
+                                    <i className={likedSongs.includes(obj.id) ? "fa fa-regular fa-heart fa-lg likedSong" : "fa fa-regular fa-heart fa-lg"}></i>
                                 </button>
                                 <AddToPlaylistFromOther track={obj} playlists={sessionUserPlaylists}/>
                             </div>

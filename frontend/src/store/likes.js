@@ -63,20 +63,22 @@ const likesReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_LIKES: {
             newState = {...state}
-            console.log(action.likes[0])
-            newState[action.likes] = action.likes
+            action.likes.forEach(element => {
+                newState[element.id] = element.songId
+            });
             return newState;
         }
 
         case NEW_LIKE: {
             newState = {...state}
-
+            newState[action.like.id] = action.like.songId
             return newState
         }
 
         case DELETE_LIKE: {
             newState = {...state}
-
+            console.log(action)
+            delete newState[action.likeId.id]
             return newState
         }
 
